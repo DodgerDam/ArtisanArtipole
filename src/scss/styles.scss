@@ -1,0 +1,161 @@
+/**
+ * Style.css
+ *
+ */
+
+// 1. Custom variables and variables overwrites.
+// @import "variables-theme";
+@import "variables";
+// 2. Import default variables and available mixins.
+@import "uikit/src/scss/variables-theme";
+@import "uikit/src/scss/mixins-theme";
+@import 'uikit-theme/import';
+//@import 'nice-select2.scss';
+// 4. Import UIkit
+@import "uikit/src/scss/uikit";
+// 5. Custom Files
+@import 'custom/import';
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+html,
+body {
+    @media (max-width: $breakpoint-small-max) {
+        overflow-x: hidden;
+    }
+    margin: 0;
+    padding: 0;
+}
+
+.uk-tooltip {
+    font-family: $global-heading-font-family;
+}
+
+// Progress Bar
+.container-progress {
+    position: fixed;
+    top: 120px;
+    height: 5px;
+    width: 100%;
+    background: $global-color-soft-gray;
+    display: none;
+    @media (min-width: $breakpoint-small) {
+        display: flex;
+    }
+    .progress {
+        background-color: $global-color-red;
+        transition: all linear 0.1s;
+        min-width: 1%;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.grecaptcha-badge {
+    bottom: 70px!important;
+    z-index: 100;
+}
+
+.container-social {
+    display: flex;
+    align-items: center;
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 205px;
+        @media (min-width: $breakpoint-medium) {
+            width: 165px;
+        }
+        @media (min-width: $breakpoint-medium-light) {
+            width: 205px;
+        }
+        li {
+            a {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                svg {
+                    fill: $global-color-gold;
+                    height: 40px;
+                    transition: all .2s ease-in-out;
+                }
+                &:hover {
+                    svg {
+                        fill: $global-color-dark-blue;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.pattern {
+    &:after {
+        content: "";
+        background: url('../images/pattern-01.png') repeat center center;
+        width: 25%;
+        height: 90%;
+        display: block;
+        position: absolute;
+        z-index: -1;
+        bottom: -30px;
+        right: -30px;
+    }
+}
+
+.center {
+    text-align: center;
+}
+
+figure {
+    margin: 0;
+}
+
+.section-txt {
+    @media (max-width: $breakpoint-small-max) {
+        margin: 2rem 0;
+    }
+    margin: 4rem 0;
+    .uk-container {
+        @media (max-width: $breakpoint-small-max) {
+            max-width: 90%;
+        }
+        @media (min-width: $breakpoint-small) {
+            max-width: 80%;
+        }
+        @media (min-width: $breakpoint-medium) {
+            max-width: 960px;
+        }
+    }
+    h2 {
+        text-transform: none;
+        margin: 2rem 0 0 0;
+    }
+    p {
+        margin-top: 0;
+    }
+}

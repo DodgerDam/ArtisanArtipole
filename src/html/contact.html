@@ -1,0 +1,160 @@
+<!-- Include Head -->
+@@include("common/header.html", {"meta": {"title":"Contact" } })
+
+<section class="section-bandeau section-bandeau__actualites">
+    <picture>
+        <source media="(max-width: 768px)" srcset="@@webRoot/assets/images/bandeaux/exposition/salle-exposition-w768.webp" type="image/webp">
+        <source media="(max-width: 768px)" srcset="@@webRoot/assets/images/bandeaux/exposition/salle-exposition-w768.jpg" type="image/jpg">
+        <source media="(max-width: 1400px)" srcset="@@webRoot/assets/images/bandeaux/exposition/salle-exposition-w1440.webp" type="image/webp">
+        <source media="(max-width: 1400px)" srcset="@@webRoot/assets/images/bandeaux/exposition/salle-exposition-w1440.jpg" type="image/jpg">
+        <img data-src="@@webRoot/assets/images/bandeaux/exposition/salle-exposition-w1920.jpg" width="1920" height="550" alt="" uk-img />
+    </picture>
+    <div class="uk-position-center">
+        @@include("common/breadcrumb.html")
+        <h1>Contact</h1>
+    </div>
+    <div class="pattern"></div>
+</section>
+
+<section class="section-formulaire">
+    <div class="uk-container">
+        <form action="" method="GET" id="contact_form_artisan">
+            <legend class="title-search">Vous souhaitez</legend>
+            <div class="uk-margin-medium-bottom uk-grid-small uk-child-width-auto uk-grid radio-container">
+                <label><input class="uk-radio" type="radio" name="radio2" checked> Un rendez-vous</label>
+                <label><input class="uk-radio" type="radio" name="radio2"> Une information</label>
+            </div>
+
+            <legend class="title-search">Vos coordonnées</legend>
+            <div class="uk-grid-medium uk-margin-medium-bottom" uk-grid>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="nom-contact-form" type="text" name="nom" value="" required>
+                    <label class="uk-form-label" for="nom-contact-form">Nom <sup>*</sup></label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="prenom-contact-form" type="text" name="prenom" value="" required>
+                    <label class="uk-form-label" for="prenom-contact-form">Prénom <sup>*</sup></label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="email-contact-form" type="text" name="email" value="" required>
+                    <label class="uk-form-label" for="email-contact-form">Email <sup>*</sup></label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="telephone-contact-form" type="text" name="telephone" value="">
+                    <label class="uk-form-label" for="telephone-contact-form">Téléphone</label>
+                </div>
+            </div>
+
+
+            <legend class="title-search">Plus d'informations sur votre projet</legend>
+            <div class="uk-grid-medium uk-margin-medium-bottom" uk-grid>
+                <div class="uk-width-1-1 input-data">
+                    <input class="uk-input" placeholder=" " id="adresse-contact-form" type="text" name="adresse-travaux" value="">
+                    <label class="uk-form-label" for="adresse-contact-form">Adresse de vos travaux</label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="zip-contact-form" type="text" name="zip" value="">
+                    <label class="uk-form-label" for="zip-contact-form">Code postal</label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="ville-contact-form" type="text" name="ville" value="">
+                    <label class="uk-form-label" for="ville-contact-form">Ville</label>
+                </div>
+                <div class="uk-width-1-2@s input-data">
+                    <input class="uk-input" placeholder=" " id="date-contact-form" type="text" name="date" value="">
+                    <label class="uk-form-label" for="date-contact-form">Date de début du projet</label>
+                </div>
+            </div>
+
+            <legend class="title-search">Votre message</legend>
+            <div class="input-data input-data-textarea">
+                <textarea class="uk-textarea" rows="5" placeholder=" " id="message-contact-form"></textarea>
+                <label class="uk-form-label" for="message-contact-form">Expliquez-nous la nature de votre projet...</label>
+            </div>
+
+            <div class="checkbox-protection-des-donnees">
+                <label class="label-checkbox"><input class="uk-checkbox" type="checkbox" name="rgpd">En soumettant ce formulaire j'accepte que mes données personnelles soient utilisées pour me recontacter dans le cadre de ma demande indiquée dans ce formulaire. Aucun traitement ne sera effectué avec mes données. Plus d'information sur notre page <a href="protection-des-donnees.html" class="content-link">protection des données</a>.</label>
+            </div>
+
+            <button type="submit" class="uk-margin content-button" aria-label="Valider votre formulaire">
+                <span class="txt-search-button">Envoyer</span>
+                <svg class="icon">
+                    <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                </svg>
+            </button>
+        </form>
+    </div>
+</section>
+
+<section class="section-contact__artisan">
+    <div class="container-flex">
+        <div class="uk-width-1-1 uk-width-1-2@m">
+            <div class="event-map-detail" data-latitude="47.05363479279517" data-longitude="5.435172227227263" data-zoom="14"></div>
+        </div>
+        <div class="container-info-contact uk-width-1-1 uk-width-1-2@m">
+            <h2>Salle d'expo Artisans Artipôle Dole-Choisey</h2>
+            <div class="container-social">
+                <ul>
+                    <li>
+                        <a href="#" title="Notre page Facebook" aria-label="Lien sur la page Facebook" target="_blank" uk-tooltip="Notre page Facebook">
+                            <svg class="icon">
+                                <use xlink:href="@@webRoot/assets/images/sprite.svg#facebook"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Notre page Instagram" aria-label="Lien sur la page Instagram" target="_blank" uk-tooltip="Notre page Instagram">
+                            <svg class="icon">
+                                <use xlink:href="@@webRoot/assets/images/sprite.svg#instagram"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Notre page Pinterest" aria-label="Lien sur la page Pinterest" target="_blank" uk-tooltip="Notre page Pinterest">
+                            <svg class="icon">
+                                <use xlink:href="@@webRoot/assets/images/sprite.svg#pinterest"></use>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Notre page YouTube" aria-label="Lien sur la page YouTube" target="_blank" uk-tooltip="Notre page YouTube">
+                            <svg class="icon">
+                                <use xlink:href="@@webRoot/assets/images/sprite.svg#youtube"></use>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="liste-info-contact">
+                <li data-aos="fade-left">
+                    <span>
+                        <svg class="icon">
+                            <use xlink:href="@@webRoot/assets/images/sprite.svg#adresse"></use>
+                        </svg>
+                    </span>
+                    <p>5 Avenue Innovia 39100 Choisey</p>
+                </li>
+                <li data-aos="fade-left">
+                    <span>
+                        <img src="@@webRoot/assets/images/phone.svg" alt="" />
+                    </span>
+                    <a href="tel:+33384352350" uk-tooltip="Numéro de téléphone +33 3 84 35 23 50" target="_blank">+33 3 84 35 23 50</a>
+                </li>
+                <li data-aos="fade-left">
+                    <span>
+                        <svg class="icon">
+                            <use xlink:href="@@webRoot/assets/images/sprite.svg#mail"></use>
+                        </svg>
+                    </span>
+                    <a href="mailto:contact@artipole-choisey.com" uk-tooltip="Email de contact contact@artipole-choisey.com" target="_blank">contact@artipole-choisey.com</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+<!-- Include Footer -->
+@@include("common/footer.html")

@@ -1,0 +1,55 @@
+//
+// Component: Breadcrumb
+//
+// =======================================================================
+#breadcrumb {
+    z-index: 10;
+    width: 100%;
+    top: 0;
+    text-align: center;
+    a {
+        color: white;
+        border-bottom: 2px solid transparent;
+        transition: all .3s ease-in-out;
+        text-shadow: 2px 3px 1px rgba(0, 0, 0, 0.3);
+        &:hover {
+            text-decoration: none;
+            border-bottom: 2px solid white;
+        }
+    }
+    .uk-breadcrumb {
+        justify-content: center;
+    }
+    .uk-breadcrumb>*>* {
+        display: inline-block;
+        font-size: 0.875rem;
+        color: white;
+    }
+    .uk-breadcrumb> :nth-child(n+2):not(.uk-first-column)::before {
+        content: ">";
+        display: inline-block;
+        margin: 0 $margin-margin/2;
+        color: white;
+    }
+    .uk-disabled {
+        a {
+            color: white;
+        }
+    }
+}
+
+.container-breadcrumb-blue {
+    #breadcrumb {
+        a {
+            color: $global-color;
+            text-shadow: none;
+            &:hover {
+                text-decoration: none;
+                border-bottom: 2px solid $global-color;
+            }
+        }
+        .uk-breadcrumb> :nth-child(n+2):not(.uk-first-column)::before {
+            color: $global-color;
+        }
+    }
+}
