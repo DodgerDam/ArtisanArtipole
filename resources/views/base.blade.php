@@ -44,7 +44,7 @@
         <div class="container-nav-header">
             <div class="uk-container">
                 <div class="container-logo">
-                    <a href="/" uk-tooltip="Artisans Artipôle-Dôle Choisey" class="logo-client"><img
+                    <a href="../" uk-tooltip="Artisans Artipôle-Dôle Choisey" class="logo-client"><img
                             data-src="/assets/images/logo-artipole.svg" alt="Artisans Artipôle-DôleChoisey"
                             width="191" height="103" uk-img/></a>
                 </div>
@@ -53,10 +53,10 @@
                          role="navigation" aria-label="Menuprincipal">
                         <ul class="uk-navbar-nav">
                             <li>
-                                <a href="listing-artisan/0" class="nav-links">Mon artisan Artipôle</a>
+                                <a href="../listing-artisan/0" class="nav-links">Mon artisan Artipôle</a>
                             </li>
                             <li>
-                                <a href="inspirations" class="nav-links">Inspirations</a>
+                                <a href="../inspirations" class="nav-links">Inspirations</a>
 
                             </li>
                             <!-- <li><a href="metiers" class="nav-links">Nos métiers</a></li> -->
@@ -64,7 +64,7 @@
                                 <button type="button" class="nav-links metier-button">Nos métiers</button>
                             </li>
                             <li>
-                                <a href="exposition" class="nav-links">Salle d'exposition</a>
+                                <a href="../exposition" class="nav-links">Salle d'exposition</a>
                             </li>
                         </ul>
                     </nav>
@@ -371,7 +371,7 @@
         <div class="uk-container">
             <div class="container-picto uk-margin-large">
                 <svg class="icon">
-                    <use xlink:href="./assets/images/sprite.svg#artisan"></use>
+                    <use xlink:href="../assets/images/sprite.svg#artisan"></use>
                 </svg>
                 <p class="title-projet">J'ai un projet</p>
             </div>
@@ -441,7 +441,7 @@
                             id="artisan-submit-button">
                         <span class="txt-search-button">Rechercher</span>
                         <svg class="icon">
-                            <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                            <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                         </svg>
                     </button>
                 </div>
@@ -463,51 +463,53 @@
                             id="metier-submit-button">
                         <span class="txt-search-button">Rechercher</span>
                         <svg class="icon">
-                            <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                            <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                         </svg>
                     </button>
                 </div>
             </form>
             <div class="uk-container-catalogues-flex">
                 <a href="actualites.html" title="Découvrez nos actualités" class="item-catalogue">
-                    <img src="./assets/images/actualites.png" width="202" height="176" alt=""/>
+                    <img src="../assets/images/actualites.png" width="202" height="176" alt=""/>
                     <div class="container-svgs">
                         <svg class="icon">
-                            <use xlink:href="./assets/images/sprite.svg#actualites"></use>
+                            <use xlink:href="../assets/images/sprite.svg#actualites"></use>
                         </svg>
                         <span>Découvrez<br>nos actualités</span>
                         <svg class="icon icon-arrow">
-                            <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                            <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                         </svg>
                     </div>
                 </a>
                 <a href="#" title="Découvrez nos catalogues" class="item-catalogue">
-                    <img src="./assets/images/brochure.png" width="258" height="205" alt=""/>
+                    <img src="../assets/images/brochure.png" width="258" height="205" alt=""/>
                     <div class="container-svgs">
                         <svg class="icon">
-                            <use xlink:href="./assets/images/sprite.svg#catalogues"></use>
+                            <use xlink:href="../assets/images/sprite.svg#catalogues"></use>
                         </svg>
                         <span>Découvrez<br>nos catalogues</span>
                         <svg class="icon icon-arrow">
-                            <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                            <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                         </svg>
                     </div>
                 </a>
                 <a href="inspirations.html" title="Découvrez nos inspirations" class="item-catalogue">
-                    <img src="./assets/images/inspirations.png" width="202" height="176" alt=""/>
+                    <img src="../assets/images/inspirations.png" width="202" height="176" alt=""/>
                     <div class="container-svgs">
                         <svg class="icon">
-                            <use xlink:href="./assets/images/sprite.svg#photo"></use>
+                            <use xlink:href="../assets/images/sprite.svg#photo"></use>
                         </svg>
                         <span>Découvrez<br>nos inspirations</span>
                         <svg class="icon icon-arrow">
-                            <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                            <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                         </svg>
                     </div>
                 </a>
             </div>
         </div>
     </div>
+
+
 
     @section('content')
     @show
@@ -525,7 +527,7 @@
                                    aria-label="Lien sur la page Facebook" target="_blank"
                                    uk-tooltip="Notre page Facebook">
                                     <svg class="icon">
-                                        <use xlink:href="./assets/images/sprite.svg#facebook"></use>
+                                        <use xlink:href="../assets/images/sprite.svg#facebook"></use>
                                     </svg>
                                 </a></li>
                         </ul>
@@ -534,14 +536,14 @@
                         <li data-aos="fade-left">
 									<span>
 										<svg class="icon">
-											<use xlink:href="./assets/images/sprite.svg#adresse"></use>
+											<use xlink:href="../assets/images/sprite.svg#adresse"></use>
 										</svg>
 									</span>
                             <p>5 Avenue Innovia 39100 Choisey</p>
                         </li>
                         <li data-aos="fade-left">
 									<span>
-										<img src="./assets/images/phone.svg" alt=""/>
+										<img src="../assets/images/phone.svg" alt=""/>
 									</span>
                             <a href="tel:+33384352350" uk-tooltip="Numéro de téléphone +33 3 84 35 23 50"
                                target="_blank">+33 3 84 35 23 50</a>
@@ -549,7 +551,7 @@
                         <li data-aos="fade-left">
 									<span>
 										<svg class="icon">
-											<use xlink:href="./assets/images/sprite.svg#mail"></use>
+											<use xlink:href="../assets/images/sprite.svg#mail"></use>
 										</svg>
 									</span>
                             <a href="mailto:contact@artipole-choisey.com"
@@ -608,7 +610,7 @@
                         <button type="submit" class="content-button" uk-tooltip="Envoyer votre formulaire">
                             <span>Envoyer</span>
                             <svg class="icon">
-                                <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                                <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                             </svg>
                         </button>
                     </form>
@@ -623,12 +625,12 @@
                 <div class="uk-width-1-1 uk-width-1-2@m">
                     <div class="uk-flex">
                         <figure>
-                            <img data-src="./assets/images/logo-footer.png" width="210" height="103"
+                            <img data-src="../assets/images/logo-footer.png" width="210" height="103"
                                  alt="Logo Artisans Artipôle" uk-img/>
                         </figure>
                         <a href="https://www.scabois.fr/" target="_blank">
                             <figure>
-                                <img data-src="./assets/images/logo-scabois.png" width="225" height="103"
+                                <img data-src="../assets/images/logo-scabois.png" width="225" height="103"
                                      alt="Logo Scabois" uk-img/>
                             </figure>
                         </a>
@@ -659,14 +661,14 @@
                         </ul>
                         <div class="container-catalogue">
                             <a href="#" title="Découvrez nos catalogues" class="item-catalogue">
-                                <img src="./assets/images/brochure.png" width="258" height="205" alt=""/>
+                                <img src="../assets/images/brochure.png" width="258" height="205" alt=""/>
                                 <div class="container-svgs">
                                     <svg class="icon">
-                                        <use xlink:href="./assets/images/sprite.svg#catalogues"></use>
+                                        <use xlink:href="../assets/images/sprite.svg#catalogues"></use>
                                     </svg>
                                     <span>Découvrez<br>nos catalogues</span>
                                     <svg class="icon icon-arrow">
-                                        <use xlink:href="./assets/images/sprite.svg#arrow"></use>
+                                        <use xlink:href="../assets/images/sprite.svg#arrow"></use>
                                     </svg>
                                 </div>
                             </a>
@@ -1361,7 +1363,7 @@
                     <li><a href="#">Mentions légales</a></li>
                     <li><a href="https://www.koredge.fr" target="_blank" class="koredge-link">
                             <svg class="icon">
-                                <use xlink:href="./assets/images/sprite.svg#k"></use>
+                                <use xlink:href="../assets/images/sprite.svg#k"></use>
                             </svg>
                             <span>Réalisation Koredge</span></a></li>
                 </ul>
