@@ -1,5 +1,5 @@
 const fs = require('fs');
-const util = require('./util.js');
+const util = require('./util');
 const glob = require('glob');
 
 const {write} = util;

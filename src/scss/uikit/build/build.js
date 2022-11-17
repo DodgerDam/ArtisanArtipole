@@ -1,6 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const util = require('./util.js');
+const util = require('./util');
 const camelize = require('camelcase');
 const argv = require('minimist')(process.argv.slice(2));
 

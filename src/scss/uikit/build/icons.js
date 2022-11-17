@@ -1,4 +1,4 @@
-const {compile, glob, icons} = require('./util.js');
+const {compile, glob, icons} = require('./util');
 const args = require('minimist')(process.argv);
 
 const path = args.c || args.custom || 'custom/*/icons';

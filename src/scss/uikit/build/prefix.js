@@ -1,6 +1,6 @@
 const fs = require('fs');
 const glob = require('glob');
-const util = require('./util.js');
+const util = require('./util');
 const argv = require('minimist')(process.argv.slice(2));
 const prompt = require('inquirer').createPromptModule();
 

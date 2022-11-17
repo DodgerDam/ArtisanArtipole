@@ -1,4 +1,4 @@
-import Media from './media';
+import Media from '../mixin/media';
 import {getMaxPathLength} from '../core/svg';
 import {css, Dimensions, each, isNumber, isString, isUndefined, startsWith, toFloat, toPx, ucfirst} from 'uikit-util';
 

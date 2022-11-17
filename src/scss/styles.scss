@@ -5,16 +5,16 @@
 
 // 1. Custom variables and variables overwrites.
 // @import "variables-theme";
-@import "src/scss/variables";
+@import "variables";
 // 2. Import default variables and available mixins.
-@import "src/scss/uikit/src/scss/variables-theme";
-@import "src/scss/uikit/src/scss/mixins-theme";
-@import 'src/scss/uikit-theme/_import';
+@import "uikit/src/scss/variables-theme";
+@import "uikit/src/scss/mixins-theme";
+@import 'uikit-theme/_import';
 //@import 'nice-select2.scss';
 // 4. Import UIkit
-@import "src/scss/uikit/src/scss/uikit";
+@import "uikit/src/scss/uikit";
 // 5. Custom Files
-@import 'src/scss/custom/_import';
+@import 'custom/_import';
 *,
 *::before,
 *::after {
@@ -116,7 +116,7 @@ body {
 .pattern {
     &:after {
         content: "";
-        background: url('../../public/images/pattern-01.png') repeat center center;
+        background: url('../images/pattern-01.png') repeat center center;
         width: 25%;
         height: 90%;
         display: block;

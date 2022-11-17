@@ -1,11 +1,11 @@
 const fs = require('fs');
-const {promisify} = require('build/util.js');
+const {promisify} = require('util');
 const archiver = require('archiver');
 const inquirer = require('inquirer');
 const pkg = require('../package.json');
 const dateFormat = require('dateformat');
 const args = require('minimist')(process.argv);
-const {glob, logFile, read, write} = require('./util.js');
+const {glob, logFile, read, write} = require('./util');
 const {coerce, inc, prerelease, valid} = require('semver');
 const exec = promisify(require('child_process').exec);
 
