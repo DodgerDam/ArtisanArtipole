@@ -29,15 +29,33 @@ class ListingController extends Controller
         $domaines = DB::table('metiers')
             ->join('metiers_artisans', 'metiers_artisans.id_metiers', '=', 'metiers.id')
             ->join('artisans', 'artisans.id', '=', 'metiers_artisans.id_metiers')
-            ->select('metiers.nom', 'id_artisans')
+            ->select('metiers.id as metID', 'metiers_artisans.id_artisans as metArID', 'metiers.nom as metNom', 'metiers.nom', 'id_artisans')
+            ->get();
+
+        $specialites = DB::table('specialites')
+            ->join('specialites_artisans', 'specialites_artisans.id_specialites', '=', 'specialites.id')
+            ->join('artisans', 'specialites_artisans.id_artisans', '=', 'artisans.id')
+            ->select('specialites.id as speID', 'specialites_artisans.id_artisans as speArID', 'specialites.nom as speNom')
+            ->get();
+
+        $certifications = DB::table('certifications')
+            ->join('certif_artisans', 'certif_artisans.id_certifications', '=', 'certifications.id')
+            ->join('artisans', 'certif_artisans.id_artisans', '=', 'artisans.id')
+            ->select('certifications.id as certID', 'certif_artisans.id_artisans as certArID', 'certifications.nom as certNom')
             ->get();
 
         $artisanID = $id;
 
         $filterMetiers = $request->metiers;
-        $filterVille = $request->ville;
+        $filterVille = $request->code;
 
-        return view('listing-artisan', compact('artisanID', 'artisans', 'metiers', 'randMetiers', 'domaines', 'filterMetiers', 'filterVille'));
+        if ($id == 0) {
+            return view('listing-artisan', compact('artisanID','artisans', 'metiers', 'randMetiers', 'domaines', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
+        } else {
+            return view('fiche-artisan', compact('artisanID','artisans', 'metiers', 'randMetiers', 'domaines', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
+        }
+
+
     }
 
     public function json()

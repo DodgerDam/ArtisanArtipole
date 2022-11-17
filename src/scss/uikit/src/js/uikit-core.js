@@ -1,7 +1,7 @@
-import UIkit from './api/index';
+import UIkit from './api';
 import Core from './core/core';
 import boot from './api/boot';
-import * as components from './core/index';
+import * as components from './core';
 import {each} from './util/lang';
 
 // register components

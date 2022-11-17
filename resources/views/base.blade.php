@@ -93,7 +93,7 @@
                 <span class="txt">J'ai un projet !</span>
                 <div class="svg-item">
                     <svg class="icon">
-                        <use xlink:href="/assets/images/sprite.svg#projet"></use>
+                        <use xlink:href="../assets/images/sprite.svg#projet"></use>
                     </svg>
                 </div>
             </button>
@@ -101,7 +101,7 @@
         <button type="button" aria-label="Bouton d'accès rapide" class="open-fast-acces"
                 uk-tooltip="title: Ouvrir l'accès rapide; pos: right">
             <svg class="icon">
-                <use xlink:href="/assets/images/sprite.svg#arrow"></use>
+                <use xlink:href="../assets/images/sprite.svg#arrow"></use>
             </svg>
         </button>
         <ul class="liste-acces-rapide-items">
@@ -114,7 +114,7 @@
                 </a>
             </li>
             <li>
-                <a href="/listing_artisans" class="item-acces-rapide">
+                <a href="#" class="item-acces-rapide">
                     <svg class="icon">
                         <use xlink:href="/assets/images/sprite.svg#carte-interactive"></use>
                     </svg>
@@ -656,7 +656,7 @@
                                 <a href="#" class="footer-link">Actualités</a>
                             </li>
                             <li>
-                                <a href="#" class="footer-link">Contact</a>
+                                <a href="contact" class="footer-link">Contact</a>
                             </li>
                         </ul>
                         <div class="container-catalogue">
@@ -1359,8 +1359,8 @@
             </div>
             <div class="container-footer-bottom-links">
                 <ul>
-                    <li><a href="#">Politique de confidentialité</a></li>
-                    <li><a href="#">Mentions légales</a></li>
+                    <li><a href="politique-confidentialite">Politique de confidentialité</a></li>
+                    <li><a href="mentions-legales">Mentions légales</a></li>
                     <li><a href="https://www.koredge.fr" target="_blank" class="koredge-link">
                             <svg class="icon">
                                 <use xlink:href="../assets/images/sprite.svg#k"></use>

@@ -1,4 +1,4 @@
-const {glob, minify, read, renderLess, write, validClassName} = require('./util');
+const {glob, minify, read, renderLess, write, validClassName} = require('./util.js');
 const argv = require('minimist')(process.argv.slice(2));
 
 argv._.forEach(arg => {

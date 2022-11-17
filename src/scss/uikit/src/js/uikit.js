@@ -1,5 +1,5 @@
 import UIkit from './uikit-core';
-import * as components from './components/index';
+import * as components from './components';
 import {each} from './util/lang';
 
 each(components, (component, name) =>

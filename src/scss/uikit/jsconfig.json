@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
             "uikit-util": ["src/js/util"]
         }

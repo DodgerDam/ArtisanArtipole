@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InspirationsController;
 use App\Http\Controllers\ExpositionController;
+use App\Http\Controllers\MentionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +29,15 @@ Route::get('/inspirations', [InspirationsController::class, 'index'])->name('ins
 // Route for Exposition
 Route::get('/exposition', [ExpositionController::class, 'index'])->name('exposition');
 
-// Route for Listing-artisan
+// Route for Listing-artisan & Fiche-artisan
 Route::get('/listing-artisan/{id}', [ListingController::class, 'show'])->name('listing-artisan');
 Route::get('/artisansJson', [ListingController::class, 'json']);
 
+// Route for Mentions-legales
+Route::get('mentions-legales', [MentionsController::class, 'index'])->name('informations/mentions-legales');
 
-Route::get('/communes', [ListingController::class, 'communes'])->name('communes');
+// Route for Politique-confidentialie
+Route::get('politique-confidentialite', [MentionsController::class, 'index'])->name('informations/politique-de-confidentialite');
+
+// Route for Contact
+Route::get('contact', [ContactController::class, 'index'])->name('informations/contact');
