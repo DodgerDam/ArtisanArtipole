@@ -43,7 +43,7 @@
                                 <h1>{{ $artisan->nom }}</h1>
                                 <p class="container-detail-artisan__competences">
                                     @foreach($domaines as $domaine)
-                                        @if($domaine->metArID == $artisanID)
+                                        @if($domaine->metArIDAr == $artisanID)
                                             {{ $domaine->metNom }}
                                         @endif
                                     @endforeach

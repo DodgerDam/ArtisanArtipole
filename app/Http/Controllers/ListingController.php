@@ -29,7 +29,7 @@ class ListingController extends Controller
         $domaines = DB::table('metiers')
             ->join('metiers_artisans', 'metiers_artisans.id_metiers', '=', 'metiers.id')
             ->join('artisans', 'artisans.id', '=', 'metiers_artisans.id_metiers')
-            ->select('metiers.id as metID', 'metiers_artisans.id_artisans as metArID', 'metiers.nom as metNom', 'metiers.nom', 'id_artisans')
+            ->select('metiers.id as metID', 'metiers_artisans.id_artisans as metArIDAr', 'metiers.nom as metNom', 'metiers.id as metId', 'metiers_artisans.id_metiers as metArIdMe', 'artisans.id as artID','id_artisans')
             ->get();
 
         $specialites = DB::table('specialites')
@@ -44,10 +44,13 @@ class ListingController extends Controller
             ->select('certifications.id as certID', 'certif_artisans.id_artisans as certArID', 'certifications.nom as certNom')
             ->get();
 
+        $domaineArtisan = DB::table('');
+
         $artisanID = $id;
 
         $filterMetiers = $request->metiers;
         $filterVille = $request->code;
+
 
         if ($id == 0) {
             return view('listing-artisan', compact('artisanID','artisans', 'metiers', 'randMetiers', 'domaines', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));

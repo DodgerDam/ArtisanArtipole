@@ -86,7 +86,6 @@
                 <div class="pattern"></div>
             </div>
         </div>
-
         @if($artisanID != 0)
             <section class="section-listing-items">
                 <div class="uk-container">
@@ -108,7 +107,7 @@
                                                                 <h2>{{ $artisan->nom }}</h2>
                                                                 <ul class="competences">
                                                                     @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArID == $artisan->id)
+                                                                        @if($domaine->metArIDAr == $artisan->id)
                                                                             <li>{{ $domaine->metNom }}</li>
                                                                         @endif
                                                                     @endforeach
@@ -164,13 +163,13 @@
                 </div>
             </section>
         @else
+
             <section class="section-listing-items">
                 <div class="uk-container">
                     <div class="kg-listing-list-map">
                         <div class="container-listing-map">
                             <div class="container-listing-items">
                                 <ul class="listing-items">
-
                                     @foreach($artisans as $artisan)
                                         @if(($filterMetiers == '#' OR $filterMetiers == null) AND ($filterVille == '#' OR $filterVille == null))
                                             <li>
@@ -185,7 +184,7 @@
                                                                 <h2>{{ $artisan->nom }}</h2>
                                                                 <ul class="competences">
                                                                     @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArID == $artisan->id)
+                                                                        @if($domaine->metArIDAr == $artisan->id)
                                                                             <li>{{ $domaine->metNom }}</li>
                                                                         @endif
                                                                     @endforeach
@@ -232,7 +231,7 @@
                                                     </form>
                                                 </div>
                                             </li>
-                                        @elseif(($filterMetiers == $domaines[$artisan->id]->nom) AND ($filterVille == '#' OR $filterVille == null))
+                                        @elseif(($filterMetiers == $filterMetiers) AND ($filterVille == '#' OR $filterVille == null))
                                             <li>
                                                 <div class="card-artisan">
                                                     <form action="./{{ $artisan->id }}">
@@ -245,7 +244,7 @@
                                                                 <h2>{{ $artisan->nom }}</h2>
                                                                 <ul class="competences">
                                                                     @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArID == $artisan->id)
+                                                                        @if($domaine->metArIDAr == $artisan->id)
                                                                             <li>{{ $domaine->metNom }}</li>
                                                                         @endif
                                                                     @endforeach
@@ -307,7 +306,7 @@
 
 
                                                                     @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArID == $artisan->id)
+                                                                        @if($domaine->metArIDAr == $artisan->id)
                                                                             <li>{{ $domaine->metNom }}</li>
                                                                         @endif
                                                                     @endforeach
@@ -367,7 +366,7 @@
                                                                 <h2>{{ $artisan->nom }}</h2>
                                                                 <ul class="competences">
                                                                     @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArID == $artisan->id)
+                                                                        @if($domaine->metArIDAr == $artisan->id)
                                                                             <li>{{ $domaine->metNom }}</li>
                                                                         @endif
                                                                     @endforeach
@@ -416,7 +415,6 @@
                                             </li>
                                         @endif
                                     @endforeach
-
                                 </ul>
                             </div>
                         </div>
