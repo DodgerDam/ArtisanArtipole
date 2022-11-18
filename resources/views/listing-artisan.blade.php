@@ -54,16 +54,16 @@
 
                         <div class="custom_city_container">
                             <div class="container-select-field">
-                                <label class="uk-form-label sr-only" for="ville"></label>
+                                <label class="uk-form-label sr-only"></label>
                                 <input id="ville" placeholder="Ville ou Code" class="custom_input">
                                 <input hidden name="code" id="code" placeholder="Code Postal">
                             </div>
                             <div class="custom_drop_1">
-                                <div class="custom_drop_2" id="ville-search-form">
-                                    <div class="custom_drop_little" data-vicopo="#ville, #code"
+                                <div class="custom_drop_2" id="list">
+                                    <div class="custom_drop_little" hidden data-vicopo="#ville, #code"
                                          data-vicopo-click='{"#code": "code", "#ville": "ville"}'>
-                                        <strong data-vicopo-code-postal></strong>
-                                        <span data-vicopo-ville></span>
+                                        <strong id="ville-show"></strong>
+                                        <span id="code-show"></span>
                                     </div>
                                 </div>
                             </div>
@@ -500,7 +500,6 @@
 
     </div>
 
-
     <style>
         .custom_input {
             font-weight: normal;
@@ -663,4 +662,53 @@
             position: relative;
         }
     </style>
+
+    <script
+        src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        var communesData = [];
+        var list = document.getElementById('list');
+
+        function communesScript() {
+            fetch('http://127.0.0.1:8000/api/communes')
+                .then(response => response.json())
+                .then(data => {
+                    communesData = data
+                })
+            console.log('-> Fetching data from api ...')
+        }
+
+        communesScript()
+
+        var inputVille = document.getElementById('ville');
+        var inputCode = document.getElementById('code');
+        var showVille = document.getElementById('ville-show');
+        var showCode = document.getElementById('code-show');
+
+        function updateData() {
+            inputVille.value = 'ville'
+            inputCode.value = 'code'
+        }
+
+        inputVille.addEventListener('keyup', function () {
+
+            console.log(inputVille.value);
+            console.log(communesData[1].libelle)
+
+            if (inputVille.value === communesData.libelle) {
+                let div = document.createElement('div');
+                div.innerHTML = communesData.libelle;
+                div.id =
+                list.appendChild(div)
+            }
+
+        });
+
+
+    </script>
+
 @stop

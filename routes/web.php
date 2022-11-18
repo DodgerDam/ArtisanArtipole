@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\API\CommunesController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ExpositionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InspirationsController;
-use App\Http\Controllers\ExpositionController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MentionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +41,6 @@ Route::get('politique-confidentialite', [MentionsController::class, 'index'])->n
 
 // Route for Contact
 Route::get('contact', [ContactController::class, 'index'])->name('informations/contact');
+
+// Route for CommunesAPI
+Route::apiResource('api/communes', CommunesController::class);

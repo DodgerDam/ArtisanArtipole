@@ -68,13 +68,4 @@ class ListingController extends Controller
 
         return json_encode($artisans);
     }
-
-    public function communes()
-    {
-        $communes = DB::table('commune')
-            ->select('libelle')
-            ->get();
-
-        return view('communes', compact('communes'));
-    }
 }

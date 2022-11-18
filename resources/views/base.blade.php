@@ -33,7 +33,6 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 
-
 </head>
 <body id="body">
 
@@ -1372,10 +1371,10 @@
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <script src="{{ asset('assets/js/main.js') }}"></script>
-<script src="{{ asset('assets/js/vicopo-jquery.min.js') }}"></script>
+
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
