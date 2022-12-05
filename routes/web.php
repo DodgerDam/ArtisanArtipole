@@ -8,6 +8,7 @@ use App\Http\Controllers\InspirationsController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MentionsController;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,9 @@ Route::get('contact', [ContactController::class, 'index'])->name('informations/c
 
 // Route for CommunesAPI
 Route::apiResource('api/communes', CommunesController::class);
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+

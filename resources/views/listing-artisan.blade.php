@@ -1,6 +1,34 @@
 @extends('base')
 @section('content')
 
+    <script>
+        let geoCenter = [{!! $filterVille[0]->latitude !!}, {!! $filterVille[0]->longitude !!}]
+        let geoCible = [];
+        const radius = {!! $filterRadius !!};
+        const eRadius = 6371;
+        const pi = 3.14;
+        let geoLatFrom = geoCenter[0] * (pi / 180);
+        let geoLatTo = geoCenter[1] * (pi / 180);
+        let latDiff = null;
+        let lonDiff = null;
+        let distance = null;
+    </script>
+    @foreach($artisans as $artisan)
+        <div id="testDiv"></div>
+        <script>
+
+            geoCible = [{!! $artisan->latitude !!}, {!! $artisan->longitude !!}]
+            latDiff = (geoCenter[0] - geoCible[0]) * (pi / 180);
+            lonDiff = (geoCenter[1] - geoCible[1]) * (pi / 180);
+            distance = 2 * eRadius * Math.sin(Math.sqrt(Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(geoLatFrom) * Math.cos(geoLatTo) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2)))
+            if (distance <= radius) {
+                console.log(true);
+            }
+            console.log('geoCenter:', geoCenter, ' geoCible:', geoCible, ' distance:', distance)
+        </script>
+    @endforeach
+
+
     <div class="site-content main" data-aos="fade">
 
         <section class="section-bandeau">
@@ -51,12 +79,24 @@
                             </select>
                         </div>
 
+                        <script
+                            src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+                        <script>
+                            var communes = {!! json_encode($communes) !!};
+                            iCommunes = [];
+                            communes.forEach(element => iCommunes.push(element.libelle.toUpperCase()));
+                            iCodes = [];
+                            communes.forEach(element => iCodes.push(element.code_postal));
+                        </script>
 
                         <div class="custom_city_container">
                             <div class="container-select-field">
                                 <label class="uk-form-label sr-only"></label>
-                                <input id="ville" placeholder="Ville ou Code" class="custom_input">
-                                <input hidden name="code" id="code" placeholder="Code Postal">
+                                <input placeholder="Ville" name="ville" autocomplete="off" autocapitalize="off"
+                                       tabindex="1"
+                                       dir="ltr" spellcheck=false autocorrect="off" id="autoComplete"
+                                       class="custom_input">
+                                <input hidden name="code" id="autoCompleteCP" placeholder="Code Postal">
                             </div>
                             <div class="custom_drop_1">
                                 <div class="custom_drop_2" id="list">
@@ -67,6 +107,17 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <label>5 KM
+                                <input type="radio" name="radius" value="5" checked>
+                            </label>
+                            <label>10 KM
+                                <input type="radio" name="radius" value="10">
+                            </label>
+                            <label>50 KM
+                                <input type="radio" name="radius" value="50">
+                            </label>
                         </div>
 
 
@@ -298,75 +349,71 @@
                                                 @endif
                                             @endforeach
                                         @elseif($filterMetiers == '#' OR $filterMetiers == null)
-                                            @foreach($specialtes as $specialte)
-                                                @if($specialte->speArID == $artisan->id)
-                                                    @if($filterVille == $specialte->speNom)
-                                                        <li>
-                                                            <div class="card-artisan">
-                                                                <form action="./{{ $artisan->id }}">
-                                                                    <button class="poptomap" data-id="marker_1">
-                                                                        <figure>
-                                                                            <img width="390" height="170" alt=""
-                                                                                 src="{{ $artisan->images }}"/>
-                                                                        </figure>
-                                                                        <div class="content-card">
-                                                                            <h2>{{ $artisan->nom }}</h2>
-                                                                            <ul class="competences">
+                                            @if($filterVille == $artisan->code_postal)
+                                                <li>
+                                                    <div class="card-artisan">
+                                                        <form action="./{{ $artisan->id }}">
+                                                            <button class="poptomap" data-id="marker_1">
+                                                                <figure>
+                                                                    <img width="390" height="170" alt=""
+                                                                         src="{{ $artisan->images }}"/>
+                                                                </figure>
+                                                                <div class="content-card">
+                                                                    <h2>{{ $artisan->nom }}</h2>
+                                                                    <ul class="competences">
 
 
-                                                                                @foreach($domaines as $domaine)
-                                                                                    @if($domaine->metArIDAr == $artisan->id)
-                                                                                        <li>{{ $domaine->metNom }}</li>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </ul>
-                                                                            <div class="container-adresse">
+                                                                        @foreach($domaines as $domaine)
+                                                                            @if($domaine->metArIDAr == $artisan->id)
+                                                                                <li>{{ $domaine->metNom }}</li>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </ul>
+                                                                    <div class="container-adresse">
+                                                                        <svg class="icon">
+                                                                            <use
+                                                                                xlink:href="../assets/images/sprite.svg#carte"></use>
+                                                                        </svg>
+                                                                        <div class="adresse">
+                                                                            <p>{{ $artisan->adresse }}
+                                                                                <br>{{ $artisan->code_postal }}
+                                                                                <span>{{ $artisan->ville}}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <ul class="share-buttons">
+                                                                        <li>
+                                                                            <a href="mailto:{{ $artisan->mail }}"
+                                                                               uk-tooltip="Contacter par email">
                                                                                 <svg class="icon">
                                                                                     <use
-                                                                                        xlink:href="../assets/images/sprite.svg#carte"></use>
+                                                                                        xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
                                                                                 </svg>
-                                                                                <div class="adresse">
-                                                                                    <p>{{ $artisan->adresse }}
-                                                                                        <br>{{ $artisan->code_postal }}
-                                                                                        <span>{{ $artisan->ville}}</span>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <ul class="share-buttons">
-                                                                                <li>
-                                                                                    <a href="mailto:{{ $artisan->mail }}"
-                                                                                       uk-tooltip="Contacter par email">
-                                                                                        <svg class="icon">
-                                                                                            <use
-                                                                                                xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                                        </svg>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="{{ $artisan->telephone }}"
-                                                                                       uk-tooltip="Contacter par Téléphone">
-                                                                                        <span class="icon-phone"></span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a :href="data.link"
-                                                                                       uk-tooltip="En savoir plus">
-                                                                                        <svg class="icon">
-                                                                                            <use
-                                                                                                xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                                        </svg>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    @endif
-                                                @endif
-                                            @endforeach
-                                        @elseif($filterMetiers == $domaines[$artisan->id]->nom AND $filterVille == $artisan->code_postal)
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="{{ $artisan->telephone }}"
+                                                                               uk-tooltip="Contacter par Téléphone">
+                                                                                <span class="icon-phone"></span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a :href="data.link"
+                                                                               uk-tooltip="En savoir plus">
+                                                                                <svg class="icon">
+                                                                                    <use
+                                                                                        xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
+                                                                                </svg>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            @endif
+                                        @elseif($filterMetiers == $domaines[$artisan->id]->metNom AND $filterVille == $artisan->code_postal)
                                             <li>
                                                 <div class="card-artisan">
                                                     <form action="./{{ $artisan->id }}">
@@ -501,6 +548,39 @@
     </div>
 
     <style>
+        #autoComplete_list_1 {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3em;
+            width: 13em;
+            padding-right: 1.2em;
+            background-color: white;
+            position: fixed;
+            border-bottom-left-radius: 0.4em;
+            border-bottom-right-radius: 0.4em;
+            border: solid darkblue 1px;
+        }
+
+        #autoComplete_list_1:hover {
+            cursor: pointer;
+        }
+
+        #autoComplete_list_1 > li:hover {
+            background-color: #9ca3af;
+        }
+
+        #autoComplete_list_1 > li {
+            padding: 0.3em;
+        }
+
+        mark {
+            background-color: rgba(94, 154, 186, 0.32);
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
         .custom_input {
             font-weight: normal;
             -webkit-text-size-adjust: 100%;
@@ -668,47 +748,37 @@
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
         crossorigin="anonymous"></script>
 
+    <script
+        src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
     <script>
-
-        var communesData = [];
-        var list = document.getElementById('list');
-
-        function communesScript() {
-            fetch('http://127.0.0.1:8000/api/communes')
-                .then(response => response.json())
-                .then(data => {
-                    communesData = data
-                })
-            console.log('-> Fetching data from api ...')
-        }
-
-        communesScript()
-
-        var inputVille = document.getElementById('ville');
-        var inputCode = document.getElementById('code');
-        var showVille = document.getElementById('ville-show');
-        var showCode = document.getElementById('code-show');
-
-        function updateData() {
-            inputVille.value = 'ville'
-            inputCode.value = 'code'
-        }
-
-        inputVille.addEventListener('keyup', function () {
-
-            console.log(inputVille.value);
-            console.log(communesData[1].libelle)
-
-            if (inputVille.value === communesData.libelle) {
-                let div = document.createElement('div');
-                div.innerHTML = communesData.libelle;
-                div.id =
-                list.appendChild(div)
+        const autoCompleteJS = new autoComplete({
+            data: {
+                src: iCommunes,
+                cache: true,
+            },
+            resultItem: {
+                highlight: true
+            },
+            resultsList: {
+                maxResults: 12
+            },
+            events: {
+                input: {
+                    selection: (event) => {
+                        const selection = event.detail.selection.value;
+                        autoCompleteJS.input.value = selection;
+                        console.log(iCommunes)
+                        iCommunes.forEach(function callback(element, i) {
+                            if (selection === element) {
+                                document.getElementById(('autoCompleteCP')).value = iCodes[i];
+                                console.log(iCommunes)
+                                console.log(iCodes)
+                            }
+                        })
+                    }
+                }
             }
-
         });
-
-
     </script>
 
 @stop

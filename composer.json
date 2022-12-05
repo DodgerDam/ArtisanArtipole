@@ -10,7 +10,9 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "reliese/laravel": "^1.1"
+        "reliese/laravel": "^1.1",
+        "tcg/voyager": "^1.6",
+      "ext-iconv": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
