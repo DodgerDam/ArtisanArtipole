@@ -45,14 +45,13 @@
                             <label class="uk-form-label sr-only" for="metiers-search-form">Métiers</label>
                             <select id="metiers-search-form" class="custom-select" name="metiers"
                                     v-model="selected_metier" autocomplete="off">
-
                                 <option value="{{ $requestMetier }}">{{ $requestMetier }}</option>
                                 <option id="metierOption" hidden value="#">Tous</option>
                                 @foreach($metiers as $metier)
                                     <option value="{{ $metier->nom }}">{{ $metier->nom }}</option>
                                 @endforeach
                             </select>
-                            <a onclick="resetFacadier()">
+                            <a onclick="metierReset()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                      stroke-linejoin="round">
@@ -60,10 +59,14 @@
                                     <line x1="6" y1="6" x2="18" y2="18"/>
                                 </svg>
                             </a>
-                            <script>
-                                function resetFacadier() {
-                                    document.getElementById('metierOption').hidden = false;
+                            <script type="text/javascript"
+                                    src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                            <script type="text/javascript">
+
+                                function metierReset() {
+                                    $("#metiers-search-form")[0].selectedIndex = 0;
                                 }
+
                             </script>
                         </div>
 
@@ -141,8 +144,6 @@
                                 }
                             </script>
                         </div>
-
-
 
 
                         {{--                        <div class="container-select-field uk-margin">--}}
