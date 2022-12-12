@@ -15,6 +15,13 @@ class ListingController extends Controller
     public function show($id, Request $request)
     {
 
+        $requestVille = $request->ville;
+        $requestRadius = $request->radius;
+        $requestCode = $request->code;
+        $requestMetier = $request->metiers;
+
+
+
         // Selection de toutes les données de métiers et de leurs photos
         $randMetiers = DB::table('metiers')
             ->join('photos_metiers', 'metiers.id', '=', 'photos_metiers.id_metiers')
@@ -78,7 +85,7 @@ class ListingController extends Controller
         $artisanID = $id;
 
         //Radius du filtre de base
-        $filterRadius = 1000000;
+        $filterRadius = -1;
 
         // Filtre métiers
         $filterMetiers = $request->metiers;
@@ -105,44 +112,73 @@ class ListingController extends Controller
         }
 
 
+        $posVille = DB::table('communes as c')
+            ->select('*')
+            ->where('libelle', '=', $request->ville)
+            ->get();
 
 
-        if ((($filterMetiers == null) OR ($filterMetiers == '#')) AND ($filterVille == null)) {
-
+        if ((($filterMetiers == null) or ($filterMetiers == '#')) and ($filterVille == null)) {
             $filterArtisans = DB::table('artisans as a')
-                ->select('a.*', 'c.libelle as ville')
+                ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
                 ->join('communes as c', 'c.id', '=', 'a.commune_id')
                 ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
                 ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
                 ->paginate(16);
-        } elseif ((($filterMetiers == null) OR ($filterMetiers == '#')) AND ($filterVille == null)) {
-
+        } elseif ((($filterMetiers != null) or ($filterMetiers != '#')) and ($filterVille == null)) {
             $filterArtisans = DB::table('artisans as a')
-                ->select('a.*', 'c.libelle as ville')
+                ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
                 ->join('communes as c', 'c.id', '=', 'a.commune_id')
                 ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
                 ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
-                ->where('m.nom', '=',$filterMetiers )
-                ->paginate(16);
-        } elseif ((($filterMetiers != null) OR ($filterMetiers != '#')) AND ($filterVille != null)) {
-
-            $filterArtisans = DB::table('artisans as a')
-                ->select('a.*', 'c.libelle as ville')
-                ->join('communes as c', 'c.id', '=', 'a.commune_id')
-                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
-                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
-                ->where('c.libelle', '=', $filterVille)
-                ->paginate(16);
-        } elseif ((($filterMetiers != null) OR ($filterMetiers != '#')) AND ($filterVille != null)) {
-
-            $filterArtisans = DB::table('artisans')
-                ->select('a.*', 'c.libelle as ville')
-                ->join('communes as c', 'c.id', '=', 'a.commune_id')
-                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
-                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
-                ->where('c.libelle', '=', $filterVille)
                 ->where('m.nom', '=', $filterMetiers)
                 ->paginate(16);
+        } elseif ((($filterMetiers == null) or ($filterMetiers == '#')) and ($filterVille != null)) {
+            if ($filterRadius == -1) {
+                $filterArtisans = DB::table('artisans as a')
+                    ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
+                    ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                    ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                    ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                    ->where('c.libelle', '=', $filterVille)
+                    ->paginate(16);
+            } else {
+
+                $filterArtisans = DB::table('artisans as a')
+                    ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
+                    ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                    ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                    ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                    ->get();
+
+                $this->distanceCalculator($filterArtisans, $posVille[0], $filterRadius);
+
+            }
+
+
+        } elseif ((($filterMetiers != null) or ($filterMetiers != '#')) and ($filterVille != null)) {
+
+            if ($filterRadius == -1) {
+                $filterArtisans = DB::table('artisans as a')
+                    ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
+                    ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                    ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                    ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                    ->where('c.libelle', '=', $filterVille)
+                    ->where('m.nom', '=', $filterMetiers)
+                    ->paginate(16);
+            } else {
+
+                $filterArtisans = DB::table('artisans as a')
+                    ->select('a.*', 'c.libelle as ville', 'c.latitude as latitude', 'c.longitude as longitude', 'c.code_postal as code_postal')
+                    ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                    ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                    ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                    ->where('m.nom', '=', $filterMetiers)
+                    ->get();
+
+                $this->distanceCalculator($filterArtisans, $posVille[0], $filterRadius);
+            }
         }
 
 
@@ -238,7 +274,7 @@ class ListingController extends Controller
 
         // Return tous si $id = 0
         if ($id == 0) {
-            return view('listing-artisan', compact('filterArtisans', 'domaines', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
+            return view('listing-artisan', compact('requestVille','requestRadius','requestCode','requestMetier','filterArtisans', 'domaines', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
         } else {
             // Sinon page détail artisan
             return view('fiche-artisan', compact('domaines', 'allArtisans', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
@@ -252,5 +288,28 @@ class ListingController extends Controller
         $artisans = Artisans::select('*')
             ->get();
         return json_encode($artisans);
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $filterArtisans
+     * @param $posVille
+     * @param mixed $filterRadius
+     * @return void
+     */
+    public function distanceCalculator(\Illuminate\Support\Collection $filterArtisans, $posVille, mixed $filterRadius): void
+    {
+        foreach ($filterArtisans as $artisan) {
+            $cible = [$artisan->latitude, $artisan->longitude];
+            $center = [$posVille->latitude, $posVille->longitude];
+            $latDiff = ($center[0] - $cible[0]) * (pi() / 180);
+            $lonDiff = ($center[1] - $cible[1]) * (pi() / 180);
+            $geoLatFrom = $center[0] * (pi() / 180);
+            $geoLatTo = $center[1] * (pi() / 180);
+            $distance = 2 * 6371 * sin(sqrt(sin($latDiff / 2) * sin($latDiff / 2) + cos($geoLatFrom) * cos($geoLatTo) * sin($lonDiff / 2) * sin($lonDiff / 2)));
+
+            if ($distance > $filterRadius) {
+                $artisan->nom = 'tooFar';
+            }
+        }
     }
 }

@@ -45,11 +45,26 @@
                             <label class="uk-form-label sr-only" for="metiers-search-form">Métiers</label>
                             <select id="metiers-search-form" class="custom-select" name="metiers"
                                     v-model="selected_metier" autocomplete="off">
-                                <option value="#">Tous</option>
+
+                                <option value="{{ $requestMetier }}">{{ $requestMetier }}</option>
+                                <option id="metierOption" hidden value="#">Tous</option>
                                 @foreach($metiers as $metier)
                                     <option value="{{ $metier->nom }}">{{ $metier->nom }}</option>
                                 @endforeach
                             </select>
+                            <a onclick="resetFacadier()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </a>
+                            <script>
+                                function resetFacadier() {
+                                    document.getElementById('metierOption').hidden = false;
+                                }
+                            </script>
                         </div>
 
                         <script
@@ -66,10 +81,26 @@
                             <div class="container-select-field">
                                 <label class="uk-form-label sr-only"></label>
                                 <input placeholder="Ville" name="ville" autocomplete="off" autocapitalize="off"
+                                       value="{{ $requestVille }}"
                                        tabindex="1"
                                        dir="ltr" spellcheck=false autocorrect="off" id="autoComplete"
                                        class="custom_input">
-                                <input hidden name="code" id="autoCompleteCP" placeholder="Code Postal">
+                                <input hidden name="code" id="autoCompleteCP" placeholder="Code Postal"
+                                       value="{{ $requestCode }}">
+                                <a onclick="resetVilleAndCode()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </a>
+                                <script>
+                                    function resetVilleAndCode() {
+                                        document.getElementById(('autoComplete')).value = "";
+                                        document.getElementById(('autoCompleteCP')).value = " ";
+                                    }
+                                </script>
                             </div>
                             <div class="custom_drop_1">
                                 <div class="custom_drop_2" id="list">
@@ -83,15 +114,35 @@
                         </div>
                         <div>
                             <label>5 KM
-                                <input type="radio" name="radius" value="5" checked>
+                                <input type="radio" name="radius" id="check1" value="5"
+                                       @if($requestRadius == 5) checked @endif>
                             </label>
                             <label>10 KM
-                                <input type="radio" name="radius" value="10">
+                                <input type="radio" name="radius" id="check2" value="10"
+                                       @if($requestRadius == 10) checked @endif>
                             </label>
                             <label>50 KM
-                                <input type="radio" name="radius" value="50">
+                                <input type="radio" name="radius" id="check3" value="50"
+                                       @if($requestRadius == 50) checked @endif>
                             </label>
+                            <a onclick="resetRadius()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </a>
+                            <script>
+                                function resetRadius() {
+                                    document.getElementById('check1').checked = false;
+                                    document.getElementById('check2').checked = false;
+                                    document.getElementById('check3').checked = false;
+                                }
+                            </script>
                         </div>
+
+
 
 
                         {{--                        <div class="container-select-field uk-margin">--}}
@@ -112,26 +163,11 @@
             </div>
         </div>
 
-
-        <script>
-            let filterVille = {!! $filterVille !!};
-            let geoCenter = [filterVille[0], filterVille[1]];
-            let geoCible = [];
-            let radius = {!! $filterRadius !!} + 0;
-            const eRadius = 6371;
-            const pi = 3.14;
-            let geoLatFrom = geoCenter[0] * (pi / 180);
-            let geoLatTo = geoCenter[1] * (pi / 180);
-            let latDiff = null;
-            let lonDiff = null;
-            let distance = null;
-            console.log('init');
-        </script>
         <section class="section-listing-items flex">
 
-            <div style="text-align: center;">
-                {!! $artisans ->links() !!}
-            </div>
+            {{--            <div style="text-align: center;">--}}
+            {{--                {!! $filterArtisans ->links() !!}--}}
+            {{--            </div>--}}
             <style>
                 .w-5 {
                     width: 2em;
@@ -147,76 +183,79 @@
                             <ul class="listing-items">
                                 @foreach($filterArtisans as $artisan)
 
-                                    <li>
-                                        <div class="card-artisan">
-                                            <form action="./{{ $artisan->id }}">
-                                                <button class="poptomap" data-id="marker_1">
-                                                    <figure>
-                                                        <img width="390" height="170" alt=""
-                                                            {{--                                                                 src=""--}}/>
-                                                    </figure>
-                                                    <div class="content-card">
-                                                        <h2>{{ $artisan->nom }}</h2>
-                                                        <ul class="competences">
-                                                            @foreach($domaines as $domaine)
-                                                                @if($domaine->metArIDAr == $artisan->id)
-                                                                    <li>{{ $domaine->metNom }}</li>
-                                                                @endif
-                                                            @endforeach
-                                                        </ul>
-                                                        <div class="container-adresse">
-                                                            <svg class="icon">
-                                                                <use
-                                                                    xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                            </svg>
-                                                            <div class="adresse">
-                                                                <p>{{ $artisan->adresse }}
+                                    @if($artisan->nom != 'tooFar')
 
-                                                                    <br>{{ $artisan->code_postal }}
-                                                                    <span>{{ $artisan->ville}}</span></p>
+                                        <li>
+                                            <div class="card-artisan">
+                                                <form action="./{{ $artisan->id }}">
+                                                    <button class="poptomap" data-id="marker_1">
+                                                        <figure>
+                                                            <img width="390" height="170" alt=""
+                                                                {{--                                                                 src=""--}}/>
+                                                        </figure>
+                                                        <div class="content-card">
+                                                            <h2>{{ $artisan->nom }}</h2>
+                                                            <ul class="competences">
+                                                                @foreach($domaines as $domaine)
+                                                                    @if($domaine->metArIDAr == $artisan->id)
+                                                                        <li>{{ $domaine->metNom }}</li>
+                                                                    @endif
+                                                                @endforeach
+                                                            </ul>
+                                                            <div class="container-adresse">
+                                                                <svg class="icon">
+                                                                    <use
+                                                                        xlink:href="../assets/images/sprite.svg#carte"></use>
+                                                                </svg>
+                                                                <div class="adresse">
+                                                                    <p>{{ $artisan->adresse }}
+
+                                                                        <br>{{ $artisan->code_postal }}
+                                                                        <span>{{ $artisan->ville}}</span></p>
+                                                                </div>
                                                             </div>
+                                                            <ul class="share-buttons">
+                                                                <li>
+                                                                    <a href="mailto:{{ $artisan->mail }}"
+                                                                       uk-tooltip="Contacter par email">
+                                                                        <svg class="icon">
+                                                                            <use
+                                                                                xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
+                                                                        </svg>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ $artisan->telephone }}"
+                                                                       uk-tooltip="Contacter par Téléphone">
+                                                                        <span class="icon-phone"></span>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a :href="data.link"
+                                                                       uk-tooltip="En savoir plus">
+                                                                        <svg class="icon">
+                                                                            <use
+                                                                                xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
+                                                                        </svg>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
-                                                        <ul class="share-buttons">
-                                                            <li>
-                                                                <a href="mailto:{{ $artisan->mail }}"
-                                                                   uk-tooltip="Contacter par email">
-                                                                    <svg class="icon">
-                                                                        <use
-                                                                            xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                    </svg>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="{{ $artisan->telephone }}"
-                                                                   uk-tooltip="Contacter par Téléphone">
-                                                                    <span class="icon-phone"></span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a :href="data.link"
-                                                                   uk-tooltip="En savoir plus">
-                                                                    <svg class="icon">
-                                                                        <use
-                                                                            xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                    </svg>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </li>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </li>
 
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center;">
-                {!! $artisans ->links() !!}
-            </div>
+            {{--            <div style="text-align: center;">--}}
+            {{--                {!! $filterArtisans ->links() !!}--}}
+            {{--            </div>--}}
         </section>
 
 
