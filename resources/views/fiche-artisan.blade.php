@@ -1,8 +1,8 @@
 @extends('base')
 @section('content')
-
     <div class="site-content main" data-aos="fade">
-        @foreach($artisans as $artisan)
+
+        @foreach($allArtisans as $artisan)
             @if($artisanID == $artisan->id)
                 <section class="section-bandeau-header">
                     <div class="container-breadcrumb-blue">
@@ -42,19 +42,19 @@
                             <div class="uk-width-1-1 uk-width-2-3@m">
                                 <h1>{{ $artisan->nom }}</h1>
                                 <p class="container-detail-artisan__competences">
-                                    @foreach($domaines as $domaine)
-                                        @if($domaine->metArIDAr == $artisanID)
-                                            {{ $domaine->metNom }}
-                                        @endif
-                                    @endforeach
+                                    {{--                                    @foreach($domaines as $domaine)--}}
+                                    {{--                                        @if($domaine->metArIDAr == $artisanID)--}}
+                                    {{--                                            {{ $domaine->metNom }}--}}
+                                    {{--                                        @endif--}}
+                                    {{--                                    @endforeach--}}
                                 </p>
                                 <div class="container-detail-artisan__specialites">
 
-                                    @foreach($specialites as $specialite)
-                                        @if($specialite->speArID == $artisanID)
-                                            <span>{{ $specialite->speNom }}</span>
-                                        @endif
-                                    @endforeach
+                                                                        @foreach($specialites as $specialite)
+                                                                            @if($specialite->speArID == $artisanID)
+                                                                                <span>{{ $specialite->speNom }}</span>
+                                                                            @endif
+                                                                        @endforeach
                                 </div>
                                 <div class="container-fiche-artisan-mobile"></div>
                                 <h2>L'activité</h2>
@@ -151,17 +151,17 @@
                                             <svg class="icon">
                                                 <use xlink:href="../assets/images/sprite.svg#carte"></use>
                                             </svg>
-                                            <div class="adresse">
-                                                <p>{{ $artisan->adresse }}<br>{{ $artisan->code_postal }}
-                                                    <span>{{ $artisan->ville }}</span></p>
-                                                <a href="#map-artisan" class="map-link" uk-scroll data-offset="150"
-                                                   data-top="150">
-                                                    <span>Voir sur le plan</span>
-                                                    <svg class="icon">
-                                                        <use xlink:href="../assets/images/sprite.svg#arrow"></use>
-                                                    </svg>
-                                                </a>
-                                            </div>
+{{--                                            <div class="adresse">--}}
+{{--                                                <p>{{ $artisan->adresse }}<br>{{ $artisan->code_postal }}--}}
+{{--                                                    <span>{{ $artisan->ville }}</span></p>--}}
+{{--                                                <a href="#map-artisan" class="map-link" uk-scroll data-offset="150"--}}
+{{--                                                   data-top="150">--}}
+{{--                                                    <span>Voir sur le plan</span>--}}
+{{--                                                    <svg class="icon">--}}
+{{--                                                        <use xlink:href="../assets/images/sprite.svg#arrow"></use>--}}
+{{--                                                    </svg>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
                                         </div>
                                         <div class="container-horaires">
                                             <figure>
@@ -200,7 +200,8 @@
                                                        aria-label="Lien sur la page Facebook" target="_blank"
                                                        uk-tooltip="Notre page Facebook">
                                                         <svg class="icon">
-                                                            <use xlink:href="../assets/images/sprite.svg#facebook"></use>
+                                                            <use
+                                                                xlink:href="../assets/images/sprite.svg#facebook"></use>
                                                         </svg>
                                                     </a>
                                                 </li>
@@ -319,7 +320,8 @@
                                 </a>
                             </div>
                             <figure>
-                                <img data-src="../assets/images/galeries/agencement/photo-agencement-05.jpg" width="1265"
+                                <img data-src="../assets/images/galeries/agencement/photo-agencement-05.jpg"
+                                     width="1265"
                                      height="910" alt="" uk-img/>
                             </figure>
                         </li>
@@ -729,7 +731,5 @@
                 <div class="swiper-scrollbar"></div>
             </div>
         </section>
-
     </div>
-
 @stop

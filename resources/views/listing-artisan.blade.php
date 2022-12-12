@@ -1,34 +1,6 @@
 @extends('base')
 @section('content')
 
-    <script>
-        let geoCenter = [{!! $filterVille[0]->latitude !!}, {!! $filterVille[0]->longitude !!}]
-        let geoCible = [];
-        const radius = {!! $filterRadius !!};
-        const eRadius = 6371;
-        const pi = 3.14;
-        let geoLatFrom = geoCenter[0] * (pi / 180);
-        let geoLatTo = geoCenter[1] * (pi / 180);
-        let latDiff = null;
-        let lonDiff = null;
-        let distance = null;
-    </script>
-    @foreach($artisans as $artisan)
-        <div id="testDiv"></div>
-        <script>
-
-            geoCible = [{!! $artisan->latitude !!}, {!! $artisan->longitude !!}]
-            latDiff = (geoCenter[0] - geoCible[0]) * (pi / 180);
-            lonDiff = (geoCenter[1] - geoCible[1]) * (pi / 180);
-            distance = 2 * eRadius * Math.sin(Math.sqrt(Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(geoLatFrom) * Math.cos(geoLatTo) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2)))
-            if (distance <= radius) {
-                console.log(true);
-            }
-            console.log('geoCenter:', geoCenter, ' geoCible:', geoCible, ' distance:', distance)
-        </script>
-    @endforeach
-
-
     <div class="site-content main" data-aos="fade">
 
         <section class="section-bandeau">
@@ -67,6 +39,7 @@
                         <p class="title-search">Je recherche un artisan...</p>
                     </div>
                     <form id="search_form" autocomplete="off">
+
 
                         <div class="container-select-field">
                             <label class="uk-form-label sr-only" for="metiers-search-form">Métiers</label>
@@ -130,359 +103,150 @@
                         {{--                            </select>--}}
                         {{--                        </div>--}}
 
-                        <button type="submit" class="submit-search-button" aria-label="Valider votre recherche"><span
+                        <button type="submit" class="submit-search-button"
+                                aria-label="Valider votre recherche"><span
                                 class="txt-search-button">Rechercher</span><span uk-search-icon></span></button>
                     </form>
                 </div>
                 <div class="pattern"></div>
             </div>
         </div>
-        @if($artisanID != 0)
-            <section class="section-listing-items">
-                <div class="uk-container">
-                    <div class="kg-listing-list-map">
-                        <div class="container-listing-map">
-                            <div class="container-listing-items">
-                                <ul class="listing-items">
-                                    @foreach($artisans as $artisan)
-                                        @if($artisanID == $artisan->id)
-                                            <li>
-                                                <div class="card-artisan">
-                                                    <form action="./{{ $artisan->id }}">
-                                                        <button class="poptomap" data-id="marker_1">
-                                                            <figure>
-                                                                <img width="390" height="170" alt=""
-                                                                     src="{{ $artisan->images }}"/>
-                                                            </figure>
-                                                            <div class="content-card">
-                                                                <h2>{{ $artisan->nom }}</h2>
-                                                                <ul class="competences">
-                                                                    @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArIDAr == $artisan->id)
-                                                                            <li>{{ $domaine->metNom }}</li>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </ul>
-                                                                <div class="container-adresse">
-                                                                    <svg class="icon">
-                                                                        <use
-                                                                            xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                                    </svg>
-                                                                    <div class="adresse">
-                                                                        <p>{{ $artisan->adresse }}
-                                                                            <br>{{ $artisan->code_postal }}
-                                                                            <span>{{ $artisan->ville}}</span></p>
-                                                                    </div>
-                                                                </div>
-                                                                <ul class="share-buttons">
-                                                                    <li>
-                                                                        <a href="mailto:{{ $artisan->mail }}"
-                                                                           uk-tooltip="Contacter par email">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="{{ $artisan->telephone }}"
-                                                                           uk-tooltip="Contacter par Téléphone">
-                                                                            <span class="icon-phone"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a :href="data.link"
-                                                                           uk-tooltip="En savoir plus">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        @else
-            <section class="section-listing-items">
-                <div class="uk-container">
-                    <div class="kg-listing-list-map">
-                        <div class="container-listing-map">
-                            <div class="container-listing-items">
-                                <ul class="listing-items">
-                                    @foreach($artisans as $artisan)
-                                        @if(($filterMetiers == '#' OR $filterMetiers == null) AND ($filterVille == '#' OR $filterVille == null))
-                                            <li>
-                                                <div class="card-artisan">
-                                                    <form action="./{{ $artisan->id }}">
-                                                        <button class="poptomap" data-id="marker_1">
-                                                            <figure>
-                                                                <img width="390" height="170" alt=""
-                                                                     src="{{ $artisan->images }}"/>
-                                                            </figure>
-                                                            <div class="content-card">
-                                                                <h2>{{ $artisan->nom }}</h2>
-                                                                <ul class="competences">
-                                                                    @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArIDAr == $artisan->id)
-                                                                            <li>{{ $domaine->metNom }}</li>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </ul>
-                                                                <div class="container-adresse">
-                                                                    <svg class="icon">
-                                                                        <use
-                                                                            xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                                    </svg>
-                                                                    <div class="adresse">
-                                                                        <p>{{ $artisan->adresse }}
-                                                                            <br>{{ $artisan->code_postal }}
-                                                                            <span>{{ $artisan->ville}}</span></p>
-                                                                    </div>
-                                                                </div>
-                                                                <ul class="share-buttons">
-                                                                    <li>
-                                                                        <a href="mailto:{{ $artisan->mail }}"
-                                                                           uk-tooltip="Contacter par email">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="{{ $artisan->telephone }}"
-                                                                           uk-tooltip="Contacter par Téléphone">
-                                                                            <span class="icon-phone"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a :href="data.link"
-                                                                           uk-tooltip="En savoir plus">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        @elseif($filterVille == '#' OR $filterVille == null)
-                                            @foreach($domaines as $domaine)
-                                                @if($domaine->metArIDAr == $artisan->id)
-                                                    @if($filterMetiers == $domaine->metNom)
-                                                        <li>
-                                                            <div class="card-artisan">
-                                                                <form action="./{{ $artisan->id }}">
-                                                                    <button class="poptomap" data-id="marker_1">
-                                                                        <figure>
-                                                                            <img width="390" height="170" alt=""
-                                                                                 src="{{ $artisan->images }}"/>
-                                                                        </figure>
-                                                                        <div class="content-card">
-                                                                            <h2>{{ $artisan->nom }}</h2>
-                                                                            <ul class="competences">
-                                                                                @foreach($domaines as $domaine)
-                                                                                    @if($domaine->metArIDAr == $artisan->id)
-                                                                                        <li>{{ $domaine->metNom }}</li>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </ul>
-                                                                            <div class="container-adresse">
-                                                                                <svg class="icon">
-                                                                                    <use
-                                                                                        xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                                                </svg>
-                                                                                <div class="adresse">
-                                                                                    <p>{{ $artisan->adresse }}
-                                                                                        <br>{{ $artisan->code_postal }}
-                                                                                        <span>{{ $artisan->ville}}</span>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <ul class="share-buttons">
-                                                                                <li>
-                                                                                    <a href="mailto:{{ $artisan->mail }}"
-                                                                                       uk-tooltip="Contacter par email">
-                                                                                        <svg class="icon">
-                                                                                            <use
-                                                                                                xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                                        </svg>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a href="{{ $artisan->telephone }}"
-                                                                                       uk-tooltip="Contacter par Téléphone">
-                                                                                        <span class="icon-phone"></span>
-                                                                                    </a>
-                                                                                </li>
-                                                                                <li>
-                                                                                    <a :href="data.link"
-                                                                                       uk-tooltip="En savoir plus">
-                                                                                        <svg class="icon">
-                                                                                            <use
-                                                                                                xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                                        </svg>
-                                                                                    </a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    @endif
-                                                @endif
-                                            @endforeach
-                                        @elseif($filterMetiers == '#' OR $filterMetiers == null)
-                                            @if($filterVille == $artisan->code_postal)
-                                                <li>
-                                                    <div class="card-artisan">
-                                                        <form action="./{{ $artisan->id }}">
-                                                            <button class="poptomap" data-id="marker_1">
-                                                                <figure>
-                                                                    <img width="390" height="170" alt=""
-                                                                         src="{{ $artisan->images }}"/>
-                                                                </figure>
-                                                                <div class="content-card">
-                                                                    <h2>{{ $artisan->nom }}</h2>
-                                                                    <ul class="competences">
 
 
-                                                                        @foreach($domaines as $domaine)
-                                                                            @if($domaine->metArIDAr == $artisan->id)
-                                                                                <li>{{ $domaine->metNom }}</li>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </ul>
-                                                                    <div class="container-adresse">
-                                                                        <svg class="icon">
-                                                                            <use
-                                                                                xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                                        </svg>
-                                                                        <div class="adresse">
-                                                                            <p>{{ $artisan->adresse }}
-                                                                                <br>{{ $artisan->code_postal }}
-                                                                                <span>{{ $artisan->ville}}</span>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <ul class="share-buttons">
-                                                                        <li>
-                                                                            <a href="mailto:{{ $artisan->mail }}"
-                                                                               uk-tooltip="Contacter par email">
-                                                                                <svg class="icon">
-                                                                                    <use
-                                                                                        xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                                </svg>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="{{ $artisan->telephone }}"
-                                                                               uk-tooltip="Contacter par Téléphone">
-                                                                                <span class="icon-phone"></span>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a :href="data.link"
-                                                                               uk-tooltip="En savoir plus">
-                                                                                <svg class="icon">
-                                                                                    <use
-                                                                                        xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                                </svg>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </button>
-                                                        </form>
+        <script>
+            let filterVille = {!! $filterVille !!};
+            let geoCenter = [filterVille[0], filterVille[1]];
+            let geoCible = [];
+            let radius = {!! $filterRadius !!} + 0;
+            const eRadius = 6371;
+            const pi = 3.14;
+            let geoLatFrom = geoCenter[0] * (pi / 180);
+            let geoLatTo = geoCenter[1] * (pi / 180);
+            let latDiff = null;
+            let lonDiff = null;
+            let distance = null;
+            console.log('init');
+        </script>
+        <section class="section-listing-items flex">
+
+            <div style="text-align: center;">
+                {!! $artisans ->links() !!}
+            </div>
+            <style>
+                .w-5 {
+                    width: 2em;
+                !important;
+                    height: 2em;
+                !important;
+                }
+            </style>
+            <div class="uk-container">
+                <div class="kg-listing-list-map">
+                    <div class="container-listing-map">
+                        <div class="container-listing-items">
+                            <ul class="listing-items">
+                                @foreach($filterArtisans as $artisan)
+                                    <script>
+                                        geoCible = [{!! $artisan->latitude !!}, {!! $artisan->longitude !!}]
+                                        latDiff = (geoCenter[0] - geoCible[0]) * (pi / 180);
+                                        lonDiff = (geoCenter[1] - geoCible[1]) * (pi / 180);
+                                        distance = 2 * eRadius * Math.sin(Math.sqrt(Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(geoLatFrom) * Math.cos(geoLatTo) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2)))
+                                        if (distance <= radius) {
+                                            console.log(true);
+                                        }
+                                        console.log('geoCenter:', geoCenter, ' geoCible:', geoCible, ' distance:', distance)
+                                        {{--if(distance <= {!! $filterRadius !!}) {--}}
+                                        {{--    console.log('<=')--}}
+                                        {{--} else {--}}
+                                        {{--    console.log('>')--}}
+                                        {{--    document.getElementById("artisan-{{ $artisan->id }}").setAttribute("type", "hidden");--}}
+
+                                        {{--}--}}
+                                    </script>
+
+                                    {{--            @foreach($domaines as $domaine)--}}
+                                    {{--                @if($domaine->metArIDAr == $artisan->id)--}}
+                                    {{--                    @if((!empty($filterMetiers) || $filterMetiers == $domaine->metNom) && (!empty(!$filterVille) || $filterVille == $artisan->code_postal))--}}
+
+
+
+
+                                    <li>
+                                        <div class="card-artisan">
+                                            <form action="./{{ $artisan->id }}">
+                                                <button class="poptomap" data-id="marker_1">
+                                                    <figure>
+                                                        <img width="390" height="170" alt=""
+                                                            {{--                                                                 src=""--}}/>
+                                                    </figure>
+                                                    <div class="content-card">
+                                                        <h2>{{ $artisan->nom }}</h2>
+                                                        <h2>{{ $artisan->id }}</h2>
+                                                        <ul class="competences">
+                                                            {{--                                                                @foreach($domaines as $domaine)--}}
+                                                            {{--                                                                    @if($domaine->metArIDAr == $artisan->id)--}}
+                                                            {{--                                                                        <li>{{ $domaine->metNom }}</li>--}}
+                                                            {{--                                                                    @endif--}}
+                                                            {{--                                                                @endforeach--}}
+                                                        </ul>
+                                                        <div class="container-adresse">
+                                                            <svg class="icon">
+                                                                <use
+                                                                    xlink:href="../assets/images/sprite.svg#carte"></use>
+                                                            </svg>
+                                                            <div class="adresse">
+                                                                <p>{{ $artisan->adresse }}
+
+                                                                    <br>{{ $artisan->code_postal }}
+                                                                    <span>{{ $artisan->ville}}</span></p>
+                                                            </div>
+                                                        </div>
+                                                        <ul class="share-buttons">
+                                                            <li>
+                                                                <a href="mailto:{{ $artisan->mail }}"
+                                                                   uk-tooltip="Contacter par email">
+                                                                    <svg class="icon">
+                                                                        <use
+                                                                            xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
+                                                                    </svg>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{{ $artisan->telephone }}"
+                                                                   uk-tooltip="Contacter par Téléphone">
+                                                                    <span class="icon-phone"></span>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a :href="data.link"
+                                                                   uk-tooltip="En savoir plus">
+                                                                    <svg class="icon">
+                                                                        <use
+                                                                            xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
+                                                                    </svg>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                </li>
-                                            @endif
-                                        @elseif($filterMetiers == $domaines[$artisan->id]->metNom AND $filterVille == $artisan->code_postal)
-                                            <li>
-                                                <div class="card-artisan">
-                                                    <form action="./{{ $artisan->id }}">
-                                                        <button class="poptomap" data-id="marker_1">
-                                                            <figure>
-                                                                <img width="390" height="170" alt=""
-                                                                     src="{{ $artisan->images }}"/>
-                                                            </figure>
-                                                            <div class="content-card">
-                                                                <h2>{{ $artisan->nom }}</h2>
-                                                                <ul class="competences">
-                                                                    @foreach($domaines as $domaine)
-                                                                        @if($domaine->metArIDAr == $artisan->id)
-                                                                            <li>{{ $domaine->metNom }}</li>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </ul>
-                                                                <div class="container-adresse">
-                                                                    <svg class="icon">
-                                                                        <use
-                                                                            xlink:href="../assets/images/sprite.svg#carte"></use>
-                                                                    </svg>
-                                                                    <div class="adresse">
-                                                                        <p>{{ $artisan->adresse }}
-                                                                            <br>{{ $artisan->code_postal }}
-                                                                            <span>{{ $artisan->ville}}</span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <ul class="share-buttons">
-                                                                    <li>
-                                                                        <a href="mailto:{{ $artisan->mail }}"
-                                                                           uk-tooltip="Contacter par email">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-mail"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a href="{{ $artisan->telephone }}"
-                                                                           uk-tooltip="Contacter par Téléphone">
-                                                                            <span class="icon-phone"></span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a :href="data.link"
-                                                                           uk-tooltip="En savoir plus">
-                                                                            <svg class="icon">
-                                                                                <use
-                                                                                    xlink:href="../assets/images/sprite.svg#fiche-plus"></use>
-                                                                            </svg>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
-                            </div>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+
+                                    {{--                    @endif--}}
+                                    {{--                @endif--}}
+                                    {{--            @endforeach--}}
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </section>
-        @endif
+            </div>
+            <div style="text-align: center;">
+                {!! $artisans ->links() !!}
+            </div>
+        </section>
+
 
         <section class="section section-background">
             <div class="uk-background-cover" uk-parallax="media: @m; bgy: -1000"
@@ -548,6 +312,7 @@
     </div>
 
     <style>
+
         #autoComplete_list_1 {
             display: flex;
             flex-direction: column;
@@ -595,12 +360,10 @@
             font-family: inherit;
             font-size: inherit;
             line-height: 1.5;
-            background: #fff;
             box-shadow: none;
             box-sizing: border-box;
             flex-wrap: wrap;
             overflow: hidden;
-            padding: .375rem .75rem;
             position: relative;
             z-index: 1;
             align-items: center;
@@ -612,12 +375,9 @@
             border-radius: 50px;
             border: 1px solid #00376a;
             cursor: pointer;
-            background-color: #fff;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
-            background-position: right .75rem center;
-            background-repeat: no-repeat;
+            background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E") no-repeat right .75rem center;
             background-size: 16px 12px;
-            padding-right: 2rem;
+            padding: .375rem 2rem .375rem .75rem;
         }
 
         .custom_select {
