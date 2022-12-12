@@ -146,30 +146,6 @@
                         <div class="container-listing-items">
                             <ul class="listing-items">
                                 @foreach($filterArtisans as $artisan)
-                                    <script>
-                                        geoCible = [{!! $artisan->latitude !!}, {!! $artisan->longitude !!}]
-                                        latDiff = (geoCenter[0] - geoCible[0]) * (pi / 180);
-                                        lonDiff = (geoCenter[1] - geoCible[1]) * (pi / 180);
-                                        distance = 2 * eRadius * Math.sin(Math.sqrt(Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(geoLatFrom) * Math.cos(geoLatTo) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2)))
-                                        if (distance <= radius) {
-                                            console.log(true);
-                                        }
-                                        console.log('geoCenter:', geoCenter, ' geoCible:', geoCible, ' distance:', distance)
-                                        {{--if(distance <= {!! $filterRadius !!}) {--}}
-                                        {{--    console.log('<=')--}}
-                                        {{--} else {--}}
-                                        {{--    console.log('>')--}}
-                                        {{--    document.getElementById("artisan-{{ $artisan->id }}").setAttribute("type", "hidden");--}}
-
-                                        {{--}--}}
-                                    </script>
-
-                                    {{--            @foreach($domaines as $domaine)--}}
-                                    {{--                @if($domaine->metArIDAr == $artisan->id)--}}
-                                    {{--                    @if((!empty($filterMetiers) || $filterMetiers == $domaine->metNom) && (!empty(!$filterVille) || $filterVille == $artisan->code_postal))--}}
-
-
-
 
                                     <li>
                                         <div class="card-artisan">
@@ -181,7 +157,6 @@
                                                     </figure>
                                                     <div class="content-card">
                                                         <h2>{{ $artisan->nom }}</h2>
-                                                        <h2>{{ $artisan->id }}</h2>
                                                         <ul class="competences">
                                                             @foreach($domaines as $domaine)
                                                                 @if($domaine->metArIDAr == $artisan->id)
@@ -233,9 +208,6 @@
                                         </div>
                                     </li>
 
-                                    {{--                    @endif--}}
-                                    {{--                @endif--}}
-                                    {{--            @endforeach--}}
                                 @endforeach
                             </ul>
                         </div>

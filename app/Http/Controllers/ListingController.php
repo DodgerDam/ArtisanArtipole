@@ -107,38 +107,41 @@ class ListingController extends Controller
 
 
 
-        $filterVille = DB::table('communes')
-            ->select('libelle')
-            ->where('libelle', '=', $request->ville)
-            ->get();
+        if ((($filterMetiers == null) OR ($filterMetiers == '#')) AND ($filterVille == null)) {
 
-
-
-        (DB::table('artisans')->where('')
-
-
-
-
-        if (($filterMetiers === null or "#") and ($filterVille === null)) {
-            $filterArtisans = DB::table('artisans')
-                ->select('*')
-                ->paginate(16);
-        } elseif (($filterMetiers !== null or "#") and ($filterVille === null)) {
             $filterArtisans = DB::table('artisans as a')
+                ->select('a.*', 'c.libelle as ville')
+                ->join('communes as c', 'c.id', '=', 'a.commune_id')
                 ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
                 ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
-                ->where($filterMetiers, '=', 'm.nom')
                 ->paginate(16);
-        } elseif (($filterMetiers === null) and ($filterVille !== null)) {
-            $filterArtisans = DB::table('artisans')
-                ->select('*')
-//                ->where('ville', '=', $filterVille)
+        } elseif ((($filterMetiers == null) OR ($filterMetiers == '#')) AND ($filterVille == null)) {
+
+            $filterArtisans = DB::table('artisans as a')
+                ->select('a.*', 'c.libelle as ville')
+                ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                ->where('m.nom', '=',$filterMetiers )
                 ->paginate(16);
-        } elseif (($filterMetiers !== null or "#") and ($filterVille !== null)) {
+        } elseif ((($filterMetiers != null) OR ($filterMetiers != '#')) AND ($filterVille != null)) {
+
+            $filterArtisans = DB::table('artisans as a')
+                ->select('a.*', 'c.libelle as ville')
+                ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                ->where('c.libelle', '=', $filterVille)
+                ->paginate(16);
+        } elseif ((($filterMetiers != null) OR ($filterMetiers != '#')) AND ($filterVille != null)) {
+
             $filterArtisans = DB::table('artisans')
-                ->select('*')
-                ->where($filterMetiers, 'in', DB::table('metiers')->select('nom')->get())
-//                ->where('ville', '=', $filterVille)
+                ->select('a.*', 'c.libelle as ville')
+                ->join('communes as c', 'c.id', '=', 'a.commune_id')
+                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                ->where('c.libelle', '=', $filterVille)
+                ->where('m.nom', '=', $filterMetiers)
                 ->paginate(16);
         }
 
