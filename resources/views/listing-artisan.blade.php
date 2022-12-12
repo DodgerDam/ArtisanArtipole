@@ -183,11 +183,11 @@
                                                         <h2>{{ $artisan->nom }}</h2>
                                                         <h2>{{ $artisan->id }}</h2>
                                                         <ul class="competences">
-                                                            {{--                                                                @foreach($domaines as $domaine)--}}
-                                                            {{--                                                                    @if($domaine->metArIDAr == $artisan->id)--}}
-                                                            {{--                                                                        <li>{{ $domaine->metNom }}</li>--}}
-                                                            {{--                                                                    @endif--}}
-                                                            {{--                                                                @endforeach--}}
+                                                            @foreach($domaines as $domaine)
+                                                                @if($domaine->metArIDAr == $artisan->id)
+                                                                    <li>{{ $domaine->metNom }}</li>
+                                                                @endif
+                                                            @endforeach
                                                         </ul>
                                                         <div class="container-adresse">
                                                             <svg class="icon">

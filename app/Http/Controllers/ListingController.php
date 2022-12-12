@@ -42,11 +42,13 @@ class ListingController extends Controller
             ->select('*')
             ->get();
 
-//        $domaines = DB::table('metiers')
-//            ->join('metiers_artisans', 'metiers_artisans.id_metiers', '=', 'metiers.id')
-//            ->join('artisans', 'artisans.id', '=', 'metiers_artisans.id_metiers')
-//            ->select('metiers.id as metID', 'metiers_artisans.id_artisans as metArIDAr', 'metiers.nom as metNom', 'metiers.id as metId', 'metiers_artisans.id_metiers as metArIdMe', 'artisans.id as artID', 'id_artisans')
-//            ->get();
+
+        $domaines = DB::table('metiers')
+            ->join('metiers_artisans', 'metiers_artisans.id_metiers', '=', 'metiers.id')
+            ->join('artisans', 'artisans.id', '=', 'metiers_artisans.id_artisans')
+            ->select('metiers.id as metID', 'metiers_artisans.id_artisans as metArIDAr', 'metiers.nom as metNom', 'metiers.id as metId', 'metiers_artisans.id_metiers as metArIdMe', 'artisans.id as artID', 'id_artisans')
+            ->get();
+
 
         // Selection de toutes les données de métiers
         $metiers = DB::table('metiers')
@@ -80,6 +82,7 @@ class ListingController extends Controller
 
         // Filtre métiers
         $filterMetiers = $request->metiers;
+        $filterVille = $request->ville;
 
         // Selection de toutes les données pour le filtre de ville
 //        $filterVille = DB::table('communes')
@@ -102,30 +105,40 @@ class ListingController extends Controller
         }
 
 
+
+
         $filterVille = DB::table('communes')
-            ->select('*')
+            ->select('libelle')
             ->where('libelle', '=', $request->ville)
             ->get();
+
+
+
+        (DB::table('artisans')->where('')
+
+
+
 
         if (($filterMetiers === null or "#") and ($filterVille === null)) {
             $filterArtisans = DB::table('artisans')
                 ->select('*')
                 ->paginate(16);
         } elseif (($filterMetiers !== null or "#") and ($filterVille === null)) {
-            $filterArtisans = DB::table('artisans')
-                ->select('*')
-                ->where('metier', '=', $filterMetiers)
+            $filterArtisans = DB::table('artisans as a')
+                ->join('metiers_artisans as ma', 'ma.id_artisans', '=', 'a.id')
+                ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
+                ->where($filterMetiers, '=', 'm.nom')
                 ->paginate(16);
         } elseif (($filterMetiers === null) and ($filterVille !== null)) {
             $filterArtisans = DB::table('artisans')
                 ->select('*')
-                ->where('ville', '=', $filterVille)
+//                ->where('ville', '=', $filterVille)
                 ->paginate(16);
         } elseif (($filterMetiers !== null or "#") and ($filterVille !== null)) {
             $filterArtisans = DB::table('artisans')
                 ->select('*')
-                ->where('metier', '=', $filterMetiers)
-                ->where('ville', '=', $filterVille)
+                ->where($filterMetiers, 'in', DB::table('metiers')->select('nom')->get())
+//                ->where('ville', '=', $filterVille)
                 ->paginate(16);
         }
 
@@ -222,10 +235,10 @@ class ListingController extends Controller
 
         // Return tous si $id = 0
         if ($id == 0) {
-            return view('listing-artisan', compact('filterArtisans', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
+            return view('listing-artisan', compact('filterArtisans', 'domaines', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
         } else {
             // Sinon page détail artisan
-            return view('fiche-artisan', compact('allArtisans', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
+            return view('fiche-artisan', compact('domaines', 'allArtisans', 'nbArtisans', 'page', 'filterRadius', 'artisanID', 'artisans', 'metiers', 'randMetiers', 'communes', 'filterMetiers', 'filterVille', 'specialites', 'certifications'));
         }
     }
 
