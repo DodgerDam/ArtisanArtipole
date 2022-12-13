@@ -44,30 +44,32 @@
                         <div class="container-select-field">
                             <label class="uk-form-label sr-only" for="metiers-search-form">Métiers</label>
                             <select id="metiers-search-form" class="custom-select" name="metiers"
-                                    v-model="selected_metier" autocomplete="off">
-                                <option value="{{ $requestMetier }}">{{ $requestMetier }}</option>
-                                <option id="metierOption" hidden value="#">Tous</option>
+                                    v-model="selected_metier">
+                                @if($requestMetier == "#")
+                                    <option value="{{ $requestMetier }}">Tous</option>
+                                @else
+                                    <option value="{{ $requestMetier }}">{{ $requestMetier }}</option>
+                                @endif
                                 @foreach($metiers as $metier)
                                     <option value="{{ $metier->nom }}">{{ $metier->nom }}</option>
                                 @endforeach
+                                <option id="metierOption" hidden value="#">Tous</option>
                             </select>
-                            <a onclick="metierReset()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                </svg>
-                            </a>
-                            <script type="text/javascript"
-                                    src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-                            <script type="text/javascript">
-
-                                function metierReset() {
-                                    $("#metiers-search-form")[0].selectedIndex = 0;
-                                }
-
-                            </script>
+                            {{--                            <a onclick="metierReset()">--}}
+                            {{--                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"--}}
+                            {{--                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"--}}
+                            {{--                                     stroke-linejoin="round">--}}
+                            {{--                                    <line x1="18" y1="6" x2="6" y2="18"/>--}}
+                            {{--                                    <line x1="6" y1="6" x2="18" y2="18"/>--}}
+                            {{--                                </svg>--}}
+                            {{--                            </a>--}}
+                            {{--                            <script>--}}
+                            {{--                                function metierReset() {--}}
+                            {{--                                    console.log('test')--}}
+                            {{--                                    document.getElementsByClassName('metiers').value = '#';--}}
+                            {{--                                    document.getElementsByClassName('metiers').textContent = 'Tous';--}}
+                            {{--                                }--}}
+                            {{--                            </script>--}}
                         </div>
 
                         <script
@@ -80,7 +82,15 @@
                             communes.forEach(element => iCodes.push(element.code_postal));
                         </script>
 
-                        <div class="custom_city_container">
+                        <div class="custom_city_container" style="display: flex; place-items: center; color: black;">
+                            <a onclick="resetVilleAndCode()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </a>
                             <div class="container-select-field">
                                 <label class="uk-form-label sr-only"></label>
                                 <input placeholder="Ville" name="ville" autocomplete="off" autocapitalize="off"
@@ -90,14 +100,6 @@
                                        class="custom_input">
                                 <input hidden name="code" id="autoCompleteCP" placeholder="Code Postal"
                                        value="{{ $requestCode }}">
-                                <a onclick="resetVilleAndCode()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round">
-                                        <line x1="18" y1="6" x2="6" y2="18"/>
-                                        <line x1="6" y1="6" x2="18" y2="18"/>
-                                    </svg>
-                                </a>
                                 <script>
                                     function resetVilleAndCode() {
                                         document.getElementById(('autoComplete')).value = "";
@@ -115,7 +117,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div style="display: flex; place-items: center;">
+                            <a onclick="resetRadius()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </a>
                             <label>5 KM
                                 <input type="radio" name="radius" id="check1" value="5"
                                        @if($requestRadius == 5) checked @endif>
@@ -128,14 +138,6 @@
                                 <input type="radio" name="radius" id="check3" value="50"
                                        @if($requestRadius == 50) checked @endif>
                             </label>
-                            <a onclick="resetRadius()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round">
-                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                </svg>
-                            </a>
                             <script>
                                 function resetRadius() {
                                     document.getElementById('check1').checked = false;
@@ -166,9 +168,22 @@
 
         <section class="section-listing-items flex">
 
-            {{--            <div style="text-align: center;">--}}
-            {{--                {!! $filterArtisans ->links() !!}--}}
-            {{--            </div>--}}
+            <div style="text-align: center;">
+                <div>
+
+
+                    {{ $filterArtisans->count() }} résultats affichés sur {{ $filterArtisans->total() }}.
+                </div>
+                <div>
+                    @if($filterArtisans->onFirstPage() == true)
+                        <a>Page précédente - </a>
+                    @else
+                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente - </a>
+                    @endif
+                    <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                </div>
+
+            </div>
             <style>
                 .w-5 {
                     width: 2em;
@@ -254,9 +269,9 @@
                     </div>
                 </div>
             </div>
-            {{--            <div style="text-align: center;">--}}
-            {{--                {!! $filterArtisans ->links() !!}--}}
-            {{--            </div>--}}
+            <div style="text-align: center;">
+                {!! $filterArtisans ->links() !!}
+            </div>
         </section>
 
 
@@ -329,13 +344,19 @@
             display: flex;
             flex-direction: column;
             gap: 0.3em;
-            width: 13em;
-            padding-right: 1.2em;
+            width: 11em;
+            place-items: start;
+            padding-right: 0.4em;
             background-color: white;
             position: fixed;
-            border-bottom-left-radius: 0.4em;
-            border-bottom-right-radius: 0.4em;
-            border: solid darkblue 1px;
+            border-radius: 0.2em;
+            max-height: 11em;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: solid #c7c7c7 1px;
+            margin-top: -0.1em;
+            margin-left: 0.8em;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
         #autoComplete_list_1:hover {
@@ -378,7 +399,7 @@
             overflow: hidden;
             position: relative;
             z-index: 1;
-            align-items: center;
+            align-items: start;
             display: flex;
             min-height: calc(1.5em + .75rem + 2px);
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -478,7 +499,6 @@
             --uk-breakpoint-m: 1020px;
             --uk-breakpoint-l: 1366px;
             --uk-breakpoint-xl: 1600px;
-            --uk-leader-fill-content: .;
             --swiper-theme-color: #007aff;
             --swiper-navigation-size: 44px;
             color: #343a40;
@@ -491,6 +511,10 @@
             padding: 3px .75rem;
             cursor: pointer;
             opacity: 1;
+        }
+
+        .autoComplete_list_1 > li {
+            font-size: 0.1em;
         }
 
         .custom_city_container {

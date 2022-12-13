@@ -7,6 +7,9 @@ use App\Models\Commune;
 use App\Models\Communes;
 use App\Models\Metiers;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -142,6 +145,7 @@ class ListingController extends Controller
                     ->join('metiers as m', 'm.id', '=', 'ma.id_metiers')
                     ->where('c.libelle', '=', $filterVille)
                     ->paginate(16);
+
             } else {
 
                 $filterArtisans = DB::table('artisans as a')
@@ -152,6 +156,9 @@ class ListingController extends Controller
                     ->get();
 
                 $this->distanceCalculator($filterArtisans, $posVille[0], $filterRadius);
+
+                $filterArtisans = $this->paginate($filterArtisans, 16);
+
 
             }
 
@@ -167,6 +174,7 @@ class ListingController extends Controller
                     ->where('c.libelle', '=', $filterVille)
                     ->where('m.nom', '=', $filterMetiers)
                     ->paginate(16);
+
             } else {
 
                 $filterArtisans = DB::table('artisans as a')
@@ -178,6 +186,8 @@ class ListingController extends Controller
                     ->get();
 
                 $this->distanceCalculator($filterArtisans, $posVille[0], $filterRadius);
+
+                $filterArtisans = $this->paginate($filterArtisans, 16);
             }
         }
 
@@ -298,6 +308,7 @@ class ListingController extends Controller
      */
     public function distanceCalculator(\Illuminate\Support\Collection $filterArtisans, $posVille, mixed $filterRadius): void
     {
+        $cntDistanceCalculator = 0;
         foreach ($filterArtisans as $artisan) {
             $cible = [$artisan->latitude, $artisan->longitude];
             $center = [$posVille->latitude, $posVille->longitude];
@@ -308,8 +319,29 @@ class ListingController extends Controller
             $distance = 2 * 6371 * sin(sqrt(sin($latDiff / 2) * sin($latDiff / 2) + cos($geoLatFrom) * cos($geoLatTo) * sin($lonDiff / 2) * sin($lonDiff / 2)));
 
             if ($distance > $filterRadius) {
-                $artisan->nom = 'tooFar';
+                unset($filterArtisans[$cntDistanceCalculator]);
             }
+            $cntDistanceCalculator ++;
         }
     }
+
+    /**
+     * Gera a paginação dos itens de um array ou collection.
+     *
+     * @param array|Collection      $items
+     * @param int   $perPage
+     * @param int  $page
+     * @param array $options
+     *
+     * @return LengthAwarePaginator
+     */
+    public function paginate($items, $perPage = 16, $page = null, $options = []): LengthAwarePaginator
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
 }
