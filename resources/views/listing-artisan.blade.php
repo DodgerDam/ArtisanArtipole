@@ -169,9 +169,14 @@
         <section class="section-listing-items flex">
 
             <div style="text-align: center;">
-                <div>Affichage de la page {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à la
-                    page {{ $filterArtisans->count() * $filterArtisans->currentPage() }} sur un total
-                    de {{ $filterArtisans->total() }}</div>
+
+                @if($filterArtisans->count() >= 16)
+                    <div>Affichage de {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à
+                        {{ $filterArtisans->count() * $filterArtisans->currentPage() }} artisans sur un total
+                        de {{ $filterArtisans->total() }}.</div>
+                @else
+                    <div>Affichage de {{ $filterArtisans->count() }} artisans</div>
+                @endif
                 <div style="display: flex; justify-content: center; gap: .2em">
                     @if($filterArtisans->onFirstPage())
                         <div>Première page</div>
