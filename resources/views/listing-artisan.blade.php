@@ -169,20 +169,22 @@
         <section class="section-listing-items flex">
 
             <div style="text-align: center;">
-                <div>
-
-
-                    {{ $filterArtisans->count() }} résultats affichés sur {{ $filterArtisans->total() }}.
-                </div>
-                <div>
-                    @if($filterArtisans->onFirstPage() == true)
-                        <a>Page précédente - </a>
+                <div>Affichage de la page {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à la
+                    page {{ $filterArtisans->count() * $filterArtisans->currentPage() }} sur un total
+                    de {{ $filterArtisans->total() }}</div>
+                <div style="display: flex; justify-content: center; gap: .2em">
+                    @if($filterArtisans->onFirstPage())
+                        <div>Première page</div>
                     @else
-                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente - </a>
+                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente</a>
                     @endif
-                    <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                    <div>-</div>
+                    @if($filterArtisans->onLastPage())
+                        <div>Derniere page</div>
+                    @else
+                        <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                    @endif
                 </div>
-
             </div>
             <style>
                 .w-5 {
@@ -269,8 +271,23 @@
                     </div>
                 </div>
             </div>
-            <div style="text-align: center;">
-                {!! $filterArtisans ->links() !!}
+            <div style="text-align: center; margin-top: 2em">
+                <div>Affichage de la page {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à la
+                    page {{ $filterArtisans->count() * $filterArtisans->currentPage() }} sur un total
+                    de {{ $filterArtisans->total() }}</div>
+                <div style="display: flex; justify-content: center; gap: .2em">
+                    @if($filterArtisans->onFirstPage())
+                        <div>Première page</div>
+                    @else
+                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente</a>
+                    @endif
+                    <div>-</div>
+                    @if($filterArtisans->onLastPage())
+                        <div>Derniere page</div>
+                    @else
+                        <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                    @endif
+                </div>
             </div>
         </section>
 
