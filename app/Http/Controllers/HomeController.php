@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artisans;
+use App\Models\Edition;
 use App\Models\Fournisseurs;
 use App\Models\Metiers;
 use App\Models\Photos;
@@ -13,6 +14,9 @@ class HomeController extends Controller
 {
     public function index()
     {
+
+        $editionEdito = Edition::select('*')->where('identifier', '=', 'home_edito')->get();
+
         $metiers = Metiers::select('id', 'nom')
             ->get();
 
@@ -34,10 +38,10 @@ class HomeController extends Controller
             ->get();
 
         foreach ($inspirations as $value) {
-            $val=$value["id"];
+            $val = $value["id"];
             $inspi_img = Photos::select('images')
                 ->join('photos_inspirations', 'photos_inspirations.id_photos', '=', 'photos.id')
-                ->where('photos_inspirations.id_metiers' , '=', $val)
+                ->where('photos_inspirations.id_metiers', '=', $val)
                 ->get();
 
             $value["img"] = $inspi_img;
@@ -46,6 +50,6 @@ class HomeController extends Controller
         $fournisseurs = Fournisseurs::select('logo')
             ->get();
 
-        return view('home', compact('metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
+        return view('home', compact('editionEdito', 'metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
     }
 }

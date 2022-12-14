@@ -87,14 +87,11 @@
                         <div class="uk-width-1-1 uk-width-1-2@m container-txt" data-aos="fade-right"
                              data-aos-delay="300">
                             <div class="content">
-                                <span class="pre-title">Edito</span>
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam dolorum quia repellendus
-                                    libero neque eaque temporibus in illo cupiditate distinctio accusantium consequatur
-                                    est ex, magni sapiente. Mollitia modi necessitatibus placeat.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam dolorum quia repellendus
-                                    libero neque eaque temporibus in illo cupiditate distinctio accusantium consequatur
-                                    est ex, magni sapiente. Mollitia modi necessitatibus placeat.</p>
+
+                                <span class="pre-title">EDITO</span>
+                                <h2>{{ $editionEdito[0]->edition_name }}</h2>
+                                <p>{{ $editionEdito[0]->content_1 }}</p>
+                                <p>{{ $editionEdito[0]->content_2 }}</p>
 
                             </div>
                             <a href="#" class="content-button" title="En savoir plus">

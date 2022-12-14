@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('edition', function (Blueprint $table) {
-            $table->integer('id', true);
+        Schema::create('editions', function (Blueprint $table) {
+            $table->id();
             $table->string('edition_name');
-            $table->longText('content');
             $table->text('summary')->nullable();
-
+            $table->longText('content_1')->nullable();
+            $table->longText('content_2')->nullable();
+            $table->longText('content_3')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('editions');
     }
 };

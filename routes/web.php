@@ -21,13 +21,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route for Home
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route for administration
+
+Route::get('/admin', [EditionController::class, 'index'])->name('admin');
+Route::post('/admin/update', [EditionController::class, 'update'])->name('admin.update');
+Route::get('/admin/show', [EditionController::class, 'show'])->name('admin.show');
 
 // Route for Home
-Route::get('/admin', [EditionController::class, 'index'])->name('admin');
-Route::get('/admin/posts', [EditionController::class, 'posts'])->name('a-posts');
-Route::get('/admin/users', [EditionController::class, 'users'])->name('a-users');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route for Inspirations
 Route::get('/inspirations', [InspirationsController::class, 'index'])->name('inspirations');

@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('edition', function (Blueprint $table) {
-            $table->dropColumn('content');
-            $table->longText('content-1')->nullable();
-            $table->longText('content-2')->nullable();
-            $table->longText('content-3')->nullable();
+        Schema::table('editions', function (Blueprint $table) {
+            $table->string('identifier');
         });
     }
 
