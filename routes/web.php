@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\API\CommunesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EditionController;
 use App\Http\Controllers\ExpositionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InspirationsController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MentionsController;
 use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,11 @@ use TCG\Voyager\Facades\Voyager;
 
 // Route for Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Route for Home
+Route::get('/admin', [EditionController::class, 'index'])->name('admin');
+Route::get('/admin/posts', [EditionController::class, 'posts'])->name('a-posts');
+Route::get('/admin/users', [EditionController::class, 'users'])->name('a-users');
 
 // Route for Inspirations
 Route::get('/inspirations', [InspirationsController::class, 'index'])->name('inspirations');
@@ -47,17 +52,8 @@ Route::get('contact', [ContactController::class, 'index'])->name('informations/c
 Route::apiResource('api/communes', CommunesController::class);
 
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+]);
