@@ -42,4 +42,26 @@ class EditionController extends Controller
         return redirect()->route('admin.show');
     }
 
+    public function usersShow()
+    {
+        $users = DB::table('users as u')
+            ->select('u.*', 'r.name as role_name')
+            ->join('roles as r', 'r.id', '=' , 'u.role_id')
+            ->get();
+
+        $roles = DB::table('roles as r')
+            ->select('*')
+            ->get();
+        return view("admin/users", compact('users', 'roles'));
+    }
+
+    public function userRemove(Request $request)
+    {
+        DB::update("DELETE FROM 'users' WHERE id=?",
+            [$request->id]);
+
+        return redirect()->route('admin.users.show');
+    }
+
+
 }
