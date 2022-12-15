@@ -28,8 +28,16 @@ class EditionController extends Controller
 
     public function update(Request $request)
     {
-        DB::update("UPDATE editions SET edition_name=?, summary=?, content_1=?, content_2=?, content_3=? WHERE id=?",
-            [$request->edition_name, $request->summary, $request->content_1, $request->content_2, $request->content_3, $request->id]);
+        DB::update("UPDATE editions SET identifier=?, summary=?, content_1=?, content_2=?, content_3=? WHERE id=?",
+            [$request->identifier, $request->summary, $request->content_1, $request->content_2, $request->content_3, $request->id]);
+
+        return redirect()->route('admin.show');
+    }
+
+    public function remove(Request $request)
+    {
+        DB::update("DELETE FROM 'editions' WHERE id=?",
+            [$request->id]);
 
         return redirect()->route('admin.show');
     }

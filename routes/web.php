@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin', [EditionController::class, 'index'])->name('admin');
 Route::post('/admin/update', [EditionController::class, 'update'])->name('admin.update');
+Route::post('/admin/remove', [EditionController::class, 'remove'])->name('admin.remove');
 Route::get('/admin/show', [EditionController::class, 'show'])->name('admin.show');
 
 // Route for Home

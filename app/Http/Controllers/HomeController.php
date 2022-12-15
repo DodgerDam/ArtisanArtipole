@@ -9,13 +9,16 @@ use App\Models\Metiers;
 use App\Models\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function MongoDB\BSON\toJSON;
 
 class HomeController extends Controller
 {
     public function index()
     {
 
-        $editionEdito = Edition::select('*')->where('identifier', '=', 'home_edito')->get();
+        $homeEdito = Edition::select('*')->where('identifier', '=', 'home_edito')->get();
+        $homeHome = Edition::select('*')->where('identifier', '=', 'home_home')->get();
+
 
         $metiers = Metiers::select('id', 'nom')
             ->get();
@@ -50,6 +53,6 @@ class HomeController extends Controller
         $fournisseurs = Fournisseurs::select('logo')
             ->get();
 
-        return view('home', compact('editionEdito', 'metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
+        return view('home', compact('homeHome','homeEdito', 'metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
     }
 }
