@@ -120,7 +120,7 @@
     <div class="grid grid-cols-3 gap-4 p-4">
         @foreach($editions as $edition)
             @if($edition->identifier == "home_actu")
-                <form action="{{ route('admin.update') }}" method="POST" class="bg-neutral-100">
+                <form action="{{ route('admin.update') }}" id="form-{{ $edition->id }}" method="POST" class="bg-neutral-100">
                     @csrf
                     <div class="flex flex-col rounded p-3 border border-neutral-300 shadow-xs">
                         <input name="id" hidden value="{{ $edition->id }}">
@@ -145,17 +145,49 @@
                                 Supprimer
                             </button>
 
-                            <button class="choice">Oui</button>
+                            <button onclick="" class="choice">Oui</button>
                             <button class="choice">Non</button>
 
                         </div>
                     </div>
                 </form>
+
                 <script>
+                    function changeForm(){
+                        document.getElementById('form-{!! $edition->id !!}').action = "{{ route('admin.remove', $edition->id) }}"
+                    }
+
                     initEditor({!! $edition->id !!})
                 </script>
             @endif
         @endforeach
+    </div>
+
+    {{--  Nos metiers  --}}
+    <div class="grid grid-cols-3 gap-4 p-4">
+        <form action="{{ route('admin.update') }}" method="POST" class="bg-neutral-100">
+            @csrf
+            <div class="flex flex-col rounded p-3 border border-neutral-300 shadow-xs">
+                <input name="id" hidden value="{{ $editions[3]->id }}">
+
+                <label for="small-input" class="block mb-2 text-sm font-medium text-gray-900">Identifieur</label>
+                <input name="identifier" value="{{ $editions[3]->identifier }}" type="text" id="small-input"
+                       class="block p-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-xs focus:ring-blue-500 focus:border-blue-500">
+                <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Contenu</label>
+                <textarea name="content_1" id="editor-{{ $editions[3]->id }}" rows="3"
+                          class="editor block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Leave a comment...">{{ $editions[3]->content_1 }}</textarea>
+                <div class="flex justify-center mt-4">
+                    <button type="submit"
+                            class="py-2 px-3 text-xs font-medium text-center w-1/3 text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        Enregistrer
+                    </button>
+                </div>
+            </div>
+        </form>
+        <script>
+            initEditor({!! $editions[2]->id !!})
+        </script>
     </div>
 
     <script>

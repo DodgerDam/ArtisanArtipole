@@ -34,11 +34,10 @@ class EditionController extends Controller
         return redirect()->route('admin.show');
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        DB::update("DELETE FROM 'editions' WHERE id=?",
-            [$request->id]);
-
+        dd($id);
+        DB::update("DELETE FROM 'editions' WHERE id=?", [$id]);
         return redirect()->route('admin.show');
     }
 
@@ -46,7 +45,7 @@ class EditionController extends Controller
     {
         $users = DB::table('users as u')
             ->select('u.*', 'r.name as role_name')
-            ->join('roles as r', 'r.id', '=' , 'u.role_id')
+            ->join('roles as r', 'r.id', '=', 'u.role_id')
             ->get();
 
         $roles = DB::table('roles as r')
@@ -54,14 +53,4 @@ class EditionController extends Controller
             ->get();
         return view("admin/users", compact('users', 'roles'));
     }
-
-    public function userRemove(Request $request)
-    {
-        DB::update("DELETE FROM 'users' WHERE id=?",
-            [$request->id]);
-
-        return redirect()->route('admin.users.show');
-    }
-
-
 }

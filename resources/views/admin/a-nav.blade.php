@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"/>
+    <link rel="icon" href="{{ asset('images/hammer.png') }}">
     <title>Panel administratif</title>
 </head>
 @if(\Illuminate\Support\Facades\Auth::user())
@@ -19,16 +20,8 @@
         <a href="{{ route('admin') }}" class="hover:underline">Accueil admin</a>
         <a href="{{ route('admin.show') }}" class="hover:underline">Posts</a>
         <a href="{{ route('admin.users.show') }}" class="hover:underline">Utilisateurs</a>
-
-        <form action="{{ route('logout') }}"
-              method="POST">
-            @csrf
-            <button type="submit">
-                Se déconnecter
-            </button>
-        </form>
-
-        {{--    <a href="{{ route('home') }}" class="hover:underline">Retour au site</a>--}}
+        <a href="{{ route('home') }}" class="hover:underline">Retour au site</a>
+        <a href="{{ route('logout') }}" class="ml-32 hover:underline" type="submit">Se déconnecter</a>
     </div>
 
     @section('admin/a-content')
