@@ -53,4 +53,10 @@ class EditionController extends Controller
             ->get();
         return view("admin/users", compact('users', 'roles'));
     }
+
+    public function tags()
+    {
+        $tags = DB::table('tags')->select('*')->get();
+        return view("admin/tags", compact('tags'));
+    }
 }

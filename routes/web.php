@@ -29,6 +29,7 @@ Route::get('/admin', [EditionController::class, 'index'])->name('admin');
 Route::post('/admin/update', [EditionController::class, 'update'])->name('admin.update');
 Route::get('/admin/remove', [EditionController::class, 'remove'])->name('admin.remove');
 Route::get('/admin/show', [EditionController::class, 'show'])->name('admin.show');
+Route::get('/admin/tags', [EditionController::class, 'tags'])->name('admin.tags');
 
 //Users
 Route::get('/admin/users', [EditionController::class, 'usersShow'])->name('admin.users.show');
