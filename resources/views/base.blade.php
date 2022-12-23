@@ -51,7 +51,10 @@
                          role="navigation" aria-label="Menuprincipal">
                         <ul class="uk-navbar-nav">
                             <li>
-                                <a href="../listing-artisan/0" class="nav-links">Mon artisan Artipôle</a>
+                                <a href="../listing-artisan/0" class="nav-links">Artisan Artipôle</a>
+                            </li>
+                            <li>
+                                <a href="../listing-artisan/0" class="nav-links">Je cherche un artisan</a>
                             </li>
                             <li>
                                 <a href="../inspirations" class="nav-links">Inspirations</a>
