@@ -51,7 +51,7 @@
                                     <option value="{{ $requestMetier }}">{{ $requestMetier }}</option>
                                 @endif
                                 @foreach($metiers as $metier)
-                                    <option value="{{ $metier->nom }}">{{ $metier->nom }}</option>
+                                    <option value="{{ $metier->libelle }}">{{ $metier->libelle }}</option>
                                 @endforeach
                                 <option id="metierOption" hidden value="#">Tous</option>
                             </select>
@@ -170,24 +170,24 @@
 
             <div style="text-align: center;">
 
-                @if($filterArtisans->count() >= 16)
-                    <div>Affichage de {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à
-                        {{ $filterArtisans->count() * $filterArtisans->currentPage() }} artisans sur un total
-                        de {{ $filterArtisans->total() }}.</div>
+                @if($filterAdherents->count() >= 16)
+                    <div>Affichage de {{ ($filterAdherents->count() * $filterAdherents->currentPage()) - 16 }} à
+                        {{ $filterAdherents->count() * $filterAdherents->currentPage() }} artisans sur un total
+                        de {{ $filterAdherents->total() }}.</div>
                 @else
-                    <div>Affichage de {{ $filterArtisans->count() }} artisans</div>
+                    <div>Affichage de {{ $filterAdherents->count() }} artisans</div>
                 @endif
                 <div style="display: flex; justify-content: center; gap: .2em">
-                    @if($filterArtisans->onFirstPage())
+                    @if($filterAdherents->onFirstPage())
                         <div>Première page</div>
                     @else
-                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente</a>
+                        <a href="{{ $filterAdherents->previousPageUrl() }}">Page précédente</a>
                     @endif
                     <div>-</div>
-                    @if($filterArtisans->onLastPage())
+                    @if($filterAdherents->onLastPage())
                         <div>Derniere page</div>
                     @else
-                        <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                        <a href="{{ $filterAdherents->nextPageUrl() }}">Page suivante</a>
                     @endif
                 </div>
             </div>
@@ -204,9 +204,9 @@
                     <div class="container-listing-map">
                         <div class="container-listing-items">
                             <ul class="listing-items">
-                                @foreach($filterArtisans as $artisan)
+                                @foreach($filterAdherents as $artisan)
 
-                                    @if($artisan->nom != 'tooFar')
+                                    @if($artisan->libelle != 'tooFar')
 
                                         <li>
                                             <div class="card-artisan">
@@ -217,7 +217,7 @@
                                                                 {{--                                                                 src=""--}}/>
                                                         </figure>
                                                         <div class="content-card">
-                                                            <h2>{{ $artisan->nom }}</h2>
+                                                            <h2>{{ $artisan->libelle }}</h2>
                                                             <ul class="competences">
                                                                 @foreach($domaines as $domaine)
                                                                     @if($domaine->metArIDAr == $artisan->id)
@@ -239,7 +239,7 @@
                                                             </div>
                                                             <ul class="share-buttons">
                                                                 <li>
-                                                                    <a href="mailto:{{ $artisan->mail }}"
+                                                                    <a href="mailto:{{ $artisan->courriel }}"
                                                                        uk-tooltip="Contacter par email">
                                                                         <svg class="icon">
                                                                             <use
@@ -277,20 +277,20 @@
                 </div>
             </div>
             <div style="text-align: center; margin-top: 2em">
-                <div>Affichage de la page {{ ($filterArtisans->count() * $filterArtisans->currentPage()) - 16 }} à la
-                    page {{ $filterArtisans->count() * $filterArtisans->currentPage() }} sur un total
-                    de {{ $filterArtisans->total() }}</div>
+                <div>Affichage de la page {{ ($filterAdherents->count() * $filterAdherents->currentPage()) - 16 }} à la
+                    page {{ $filterAdherents->count() * $filterAdherents->currentPage() }} sur un total
+                    de {{ $filterAdherents->total() }}</div>
                 <div style="display: flex; justify-content: center; gap: .2em">
-                    @if($filterArtisans->onFirstPage())
+                    @if($filterAdherents->onFirstPage())
                         <div>Première page</div>
                     @else
-                        <a href="{{ $filterArtisans->previousPageUrl() }}">Page précédente</a>
+                        <a href="{{ $filterAdherents->previousPageUrl() }}">Page précédente</a>
                     @endif
                     <div>-</div>
-                    @if($filterArtisans->onLastPage())
+                    @if($filterAdherents->onLastPage())
                         <div>Derniere page</div>
                     @else
-                        <a href="{{ $filterArtisans->nextPageUrl() }}">Page suivante</a>
+                        <a href="{{ $filterAdherents->nextPageUrl() }}">Page suivante</a>
                     @endif
                 </div>
             </div>

@@ -15,7 +15,7 @@ class ArtisanController extends Controller
         $randMetiers = DB::table('metiers')
             ->join('photos_metiers', 'metiers.id', '=', 'photos_metiers.id_metiers')
             ->join('photos', 'photos.id', '=', 'photos_metiers.id_photos')
-            ->select('metiers.*', 'photos.images')
+            ->select('metiers.*', 'photos.data')
             ->orderBy(DB::raw('RAND()'))
             ->get();
 

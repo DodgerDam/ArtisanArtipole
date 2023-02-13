@@ -16,33 +16,34 @@ class HomeController extends Controller
     public function index()
     {
 
-        $homeEdito = Edition::select('*')->where('identifier', '=', 'home_edito')->get();
-        $homeHome = Edition::select('*')->where('identifier', '=', 'home_home')->get();
+        $homeEdito = DB::table('editions')->select('*')->where('identifier', '=', 'home_edito')->get();
+        $homeHome = DB::table('editions')->select('*')->where('identifier', '=', 'home_home')->get();
 
 
-        $metiers = Metiers::select('id', 'nom')
+        $metiers = Metiers::select('id', 'libelle')
             ->get();
 
         $randMetiers = DB::table('metiers')
             ->join('photos_metiers', 'metiers.id', '=', 'photos_metiers.id_metiers')
             ->join('photos', 'photos.id', '=', 'photos_metiers.id_photos')
-            ->select('metiers.*', 'photos.images')
+            ->select('metiers.*', 'photos.data')
             ->orderBy(DB::raw('RAND()'))
             ->get();
 
         $nombreArtisans = Artisans::select('*')
             ->count();
 
-        $nombreFournisseurs = Fournisseurs::select('*')
+        $nombreFournisseurs = DB::table('fournisseurs')
+            ->select('*')
             ->count();
 
-        $inspirations = Metiers::select('id', 'nom')
+        $inspirations = Metiers::select('id', 'libelle')
             ->where('id', '!=', '6')
             ->get();
 
         foreach ($inspirations as $value) {
             $val = $value["id"];
-            $inspi_img = Photos::select('images')
+            $inspi_img = Photos::select('data')
                 ->join('photos_inspirations', 'photos_inspirations.id_photos', '=', 'photos.id')
                 ->where('photos_inspirations.id_metiers', '=', $val)
                 ->get();
@@ -50,9 +51,10 @@ class HomeController extends Controller
             $value["img"] = $inspi_img;
         }
 
-        $fournisseurs = Fournisseurs::select('logo')
+        $fournisseurs = DB::table('fournisseurs')
+            ->select('logo')
             ->get();
 
-        return view('home', compact('homeHome','homeEdito', 'metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
+        return view('home', compact('homeHome', 'homeEdito', 'metiers', 'randMetiers', 'nombreArtisans', 'nombreFournisseurs', 'inspirations', 'fournisseurs'));
     }
 }

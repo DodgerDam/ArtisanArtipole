@@ -74,7 +74,7 @@
                 <div class="swiper-pagination"></div>
             </div>
             <div class="uk-position-center container-home-h1">
-                <h1>{!! $homeHome[0]->content_1 !!}</h1>
+                <h1>{!! $homeHome[0]->contenu !!}</h1>
             </div>
         </section>
 
@@ -85,8 +85,8 @@
                          data-aos-delay="300">
                         <div class="content">
 
-                            <span class="pre-title">EDITO</span>
-                            {!! $homeEdito[0]->content_1 !!}
+{{--                            <span class="pre-title">EDITO</span>--}}
+                            {!! $homeEdito[0]->contenu !!}
 
                         </div>
                         <a href="#" class="content-button" title="En savoir plus">
@@ -159,12 +159,12 @@
                                 data-aos-delay="250"
                             @endif>
 
-                            <a href="#" title={{ $randMetier->nom }}>
+                            <a href="#" title={{ $randMetier->libelle }}>
                                 <figure>
-                                    <p class="title">{{ $randMetier->nom }}</p>
-                                    <img data-src={{ $randMetier->images }} alt="" uk-img/>
+                                    <p class="title">{{ $randMetier->libelle }}</p>
+                                    <img data-src={{ $randMetier->data }} alt="" uk-img/>
                                     <figcaption>
-                                        <h3>{{ $randMetier->nom }}</h3>
+                                        <h3>{{ $randMetier->libelle }}</h3>
                                         <p>{{ $randMetier->description_accueil }}</p>
                                     </figcaption>
                                 </figure>

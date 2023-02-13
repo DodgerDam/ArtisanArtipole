@@ -222,8 +222,8 @@
                             <option value="none" selected disabled hidden>Métier</option>
 
                             @foreach($metiers as $metier)
-                                <option value="{{ $metier->nom }}">
-                                    {{ $metier->nom }}
+                                <option value="{{ $metier->libelle }}">
+                                    {{ $metier->libelle }}
                                 </option>
                             @endforeach
                         </select>
@@ -331,10 +331,10 @@
                 <ul>
                     @foreach($randMetiers as $randMetier)
                         <li class="card-metiers card-metiers-{{ $loop->index }}">
-                            <a href="#" title={{ $randMetier->nom }}>
+                            <a href="#" title={{ $randMetier->libelle }}>
                                 <figure>
-                                    <p class="title">{{ $randMetier->nom }}</p>
-                                    <img data-src={{ $randMetier->images }} alt="" uk-img/>
+                                    <p class="title">{{ $randMetier->libelle }}</p>
+                                    <img data-src={{ $randMetier->data }} alt="" uk-img/>
                                 </figure>
                             </a>
                         </li>
